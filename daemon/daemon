@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Will be executed as user "root".
+
+# Name this file "daemon.sh" in your plugin-archive. It will be renamed to NAME
+# during installation
+
+pluginname=$(basename $0 .sh)
+
+if [ -x /usr/bin/logger ]; then
+    /usr/bin/logger "loxberry-plugin-$pluginname - DAEMON Script from RCSwitch Plugin"
+fi
+
+# Create sudoers file
+if [ ! -e /etc/sudoers.d/$pluginname ]
+	then
+		if [ -x /usr/bin/logger ]; then 
+			/usr/bin/logger "loxberry-plugin-$pluginname - Adding sudoers permissions"
+		fi
+		echo %loxberry ALL = NOPASSWD: /opt/loxberry/data/plugins/$pluginname/bin/send433 > /etc/sudoers.d/$pluginname
+		chmod 0440 /etc/sudoers.d/$pluginname
+fi
