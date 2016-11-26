@@ -33,12 +33,13 @@ use Config::Simple;
 ##########################################################################
 
 # Version of this script
-our $version = "0.0.1";
+our $version = "0.0.2";
 
 # Figure out in which subfolder we are installed
 our $psubfolder = abs_path($0);
 $psubfolder =~ s/(.*)\/(.*)\/(.*)$/$2/g;
 
+our $home = File::HomeDir->my_home;
 our $cfg           = new Config::Simple("$home/config/system/general.cfg");
 our $installfolder = $cfg->param("BASE.INSTALLFOLDER");
 
