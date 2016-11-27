@@ -33,7 +33,7 @@ use Config::Simple;
 ##########################################################################
 
 # Version of this script
-our $version = "0.0.2";
+our $version = "0.0.3";
 
 # Figure out in which subfolder we are installed
 our $psubfolder = abs_path($0);
@@ -74,7 +74,7 @@ if ( $query{'family'} ne "" ) {
 
 if ( $query{'group'} ne "" ) {
   our $group = $query{'group'};
-  $group = substr($group,0,1);
+  $group = substr($group,0,5);
   if ( $group !~ /[0-9]/ ) {
     print "Wrong group number. Giving up.";
   }
@@ -85,7 +85,7 @@ if ( $query{'group'} ne "" ) {
 
 if ( $query{'unit'} ne "" ) {
   our $unit = $query{'unit'};
-  $unit = substr($unit,0,1);
+  $unit = substr($unit,0,5);
   if ( $unit !~ /[0-9]/ ) {
     print "Wrong unit number. Giving up.";
   }
