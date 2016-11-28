@@ -1,3 +1,221 @@
 <p>
 Dieses Plugin hat keine Einstellungen. Bitte lese Dir die Dokumentation unter <a href="http://www.loxwiki.eu:80/x/JATL" target="_blank">http://www.loxwiki.eu:80/x/JATL</a> durch, um zu erfahren wie Du aus Loxone heraus Deine Funksteckdosen schalten kannst.
 </p>
+
+<br>
+<hr>
+<br>
+
+<center><h3>Befehle für LoxoneConfig ermitteln</h3></center>
+
+<p>
+Im folgenden kannst Du anhand der Einstellungen an Deiner Funksteckdose die korrekten Parameter für die Ein- und Ausschaltbefehle 
+für die LoxoneConfig ermitteln.
+</p>
+
+<link rel="stylesheet" href="/plugins/rcswitch/styles.css">
+
+<script type="text/JavaScript">
+
+function addEvent( obj, type, fn )
+{
+   if (obj.addEventListener) {
+      obj.addEventListener( type, fn, false );
+   } else if (obj.attachEvent) {
+      obj["e"+type+fn] = fn;
+      obj[type+fn] = function() { obj["e"+type+fn]( window.event ); }
+      obj.attachEvent( "on"+type, obj[type+fn] );
+   }
+}
+
+function removeEvent( obj, type, fn )
+{
+   if (obj.removeEventListener) {
+      obj.removeEventListener( type, fn, false );
+   } else if (obj.detachEvent) {
+      obj.detachEvent( "on"+type, obj[type+fn] );
+      obj[type+fn] = null;
+      obj["e"+type+fn] = null;
+   }
+}
+
+function init () 
+{
+	var sw=document.getElementsByName('sw[]');
+	for (var i=0;i<sw.length;i++) {
+		addEvent( sw[i], 'click', clickSW);
+	}
+}
+
+function clickSW() {
+	var input=this.children[0];
+	if (this.className == 'off') {
+		this.className = 'on';
+		input.value = "1";
+	} else {
+		this.className = 'off';
+		input.value = "0";
+	}
+}
+
+window.onload = init;
+</script>
+
+<div class="ui-corner-all custom-corners">
+<div class="ui-bar ui-bar-a">
+  <h2>Elro Funksteckdosen und kompatible</h2>
+</div>
+<div class="ui-body ui-body-a">
+
+<form method="post" data-ajax="false" name="main_form1" id="main_form1" action="./index.cgi">
+<input type="hidden" name="type" id="type" value="elro">
+<table border=0 cellpadding=10 width="100%">
+<tr>
+<td>
+<img src="/plugins/rcswitch/elro.jpg" alt="Elro">
+</td>
+<td>
+<div class="switch">
+	<div class="titles"><span class="title_left">ON</span><span class="title_right">DIP</span></div>
+	<div class="dip_bar">
+	<span class="dip"><div class="<!--$statusb0-->" name="sw[]" id="sw0"><input type="hidden" name="b[0]" id="b0" value="<!--$valueb0-->"></div><span class="desc">1</span></span>
+	<span class="dip"><div class="<!--$statusb1-->" name="sw[]" id="sw1"><input type="hidden" name="b[1]" id="b1" value="<!--$valueb1-->"></div><span class="desc">2</span></span>
+	<span class="dip"><div class="<!--$statusb2-->" name="sw[]" id="sw2"><input type="hidden" name="b[2]" id="b2" value="<!--$valueb2-->"></div><span class="desc">3</span></span>
+	<span class="dip"><div class="<!--$statusb3-->" name="sw[]" id="sw3"><input type="hidden" name="b[3]" id="b3" value="<!--$valueb3-->"></div><span class="desc">4</span></span>
+	<span class="dip"><div class="<!--$statusb4-->" name="sw[]" id="sw4"><input type="hidden" name="b[4]" id="b4" value="<!--$valueb4-->"></div><span class="desc">5</span></span>
+	<span class="dip"><div class="<!--$statusb5-->" name="sw[]" id="sw5"><input type="hidden" name="b[5]" id="b5" value="<!--$valueb5-->"></div><span class="desc">A</span></span>
+	<span class="dip"><div class="<!--$statusb6-->" name="sw[]" id="sw6"><input type="hidden" name="b[6]" id="b6" value="<!--$valueb6-->"></div><span class="desc">B</span></span>
+	<span class="dip"><div class="<!--$statusb7-->" name="sw[]" id="sw7"><input type="hidden" name="b[7]" id="b7" value="<!--$valueb7-->"></div><span class="desc">C</span></span>
+	<span class="dip"><div class="<!--$statusb8-->" name="sw[]" id="sw8"><input type="hidden" name="b[8]" id="b8" value="<!--$valueb8-->"></div><span class="desc">D</span></span>
+	<span class="dip"><div class="<!--$statusb9-->" name="sw[]" id="sw9"><input type="hidden" name="b[9]" id="b9" value="<!--$valueb9-->"></div><span class="desc">E</span></span>
+	</div>
+</div>
+</td>
+<td>
+<div class="buttons"><input class="button" type="submit" form="main_form1" name="btnsubmit1" id="btnsubmit1" value="LoxoneConfig Befehle erzeugen" /></div>
+</td>
+</tr>
+<tr>
+<td colspan=3>
+<table border=0 cellspacing=10 width="100%">
+<tr>
+<td width="20%"><b>Adresse:</b></td>
+<td colspan=2><pre>http://loxberry:DEIN-LOXBERRY-PASSWORT@<!--$host--></pre></td>
+<tr>
+<td width="20%"><b>Befehl bei EIN:</b></td>
+<td width="70%"><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?group=</font><font color="blue"><!--$group1--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit1--></font><font color="red">&amp;command=</font><font color="blue">on</font></pre></td>
+<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?group=<!--$group1-->&unit=<!--$unit1-->&command=on" target="_blank">Test</a> </td>
+</tr>
+<tr>
+<td><b>Befehl bei AUS:</b></td>
+<td><pre>/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?group=</font><font color="blue"><!--$group1--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit1--></font><font color="red">&amp;command=</font><font color="blue">off</font></pre></td>
+<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?group=<!--$group1-->&unit=<!--$unit1-->&command=off" target="_blank">Test</a> </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</form>
+
+</div>
+</div>
+
+<br><br>
+
+<div class="ui-corner-all custom-corners">
+<div class="ui-bar ui-bar-a">
+  <h2>Intertechno Funksteckdosen und kompatible</h2>
+</div>
+<div class="ui-body ui-body-a">
+
+<form method="post" data-ajax="false" name="main_form2" id="main_form2" action="./index.cgi">
+<input type="hidden" name="type" id="type" value="intertechno">
+<table border=0 cellpadding=10 width="100%">
+<tr>
+<td>
+<img src="/plugins/rcswitch/intertechno.jpg" alt="Intertechno">
+</td>
+<td>
+<table border=0 cellspacing=10>
+<tr>
+<td>
+<font size="-1">Gruppe:</font>
+</td>
+<td>
+<div class="ui-field-contain">
+  <select name="family" id="family">
+  <option value="A" <!--$selectedA-->>A</option>
+  <option value="B" <!--$selectedB-->>B</option>
+  <option value="C" <!--$selectedC-->>C</option>
+  <option value="D" <!--$selectedD-->>D</option>
+  <option value="E" <!--$selectedE-->>E</option>
+  <option value="F" <!--$selectedF-->>F</option>
+  <option value="G" <!--$selectedG-->>G</option>
+  <option value="H" <!--$selectedH-->>H</option>
+  <option value="I" <!--$selectedI-->>I</option>
+  <option value="J" <!--$selectedJ-->>J</option>
+  <option value="K" <!--$selectedK-->>K</option>
+  <option value="L" <!--$selectedL-->>L</option>
+  <option value="M" <!--$selectedM-->>M</option>
+  <option value="N" <!--$selectedN-->>N</option>
+  <option value="O" <!--$selectedO-->>O</option>
+  <option value="P" <!--$selectedP-->>P</option>
+  </select>
+</div>
+</td>
+<td>
+<font size="-1">Gerät:</font>
+</td>
+<td>
+<div class="ui-field-contain">
+  <select name="unit" id="unit">
+  <option value="1" <!--$selected1-->>1</option>
+  <option value="2" <!--$selected2-->>2</option>
+  <option value="3" <!--$selected3-->>3</option>
+  <option value="4" <!--$selected4-->>4</option>
+  <option value="5" <!--$selected5-->>5</option>
+  <option value="6" <!--$selected6-->>6</option>
+  <option value="7" <!--$selected7-->>7</option>
+  <option value="8" <!--$selected8-->>8</option>
+  <option value="9" <!--$selected9-->>9</option>
+  <option value="10" <!--$selected10-->>10</option>
+  <option value="11" <!--$selected11-->>11</option>
+  <option value="12" <!--$selected12-->>12</option>
+  <option value="13" <!--$selected13-->>13</option>
+  <option value="14" <!--$selected14-->>14</option>
+  <option value="15" <!--$selected15-->>15</option>
+  <option value="16" <!--$selected16-->>16</option>
+  </select>
+</div>
+</td>
+</tr>
+</table>
+</td>
+<td>
+<div class="buttons"><input class="button" type="submit" form="main_form2" name="btnsubmit2" id="btnsubmit2" value="LoxoneConfig Befehle erzeugen" /></div>
+</td>
+</tr>
+<tr>
+<td colspan=3>
+<table border=0 cellspacing=10 width="100%">
+<tr>
+<td width="20%"><b>Adresse:</b></td>
+<td colspan=2><pre>http://loxberry:DEIN-LOXBERRY-PASSWORT@<!--$host--></pre></td>
+<tr>
+<td width="20%"><b>Befehl bei EIN:</b></td>
+<td width="70%"><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?family=</font><font color="blue"><!--$family2--><font color="red">&amp;group=</font><font color="blue"><!--$group2--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit2--></font><font color="red">&amp;command=</font><font color="blue">on</font></pre></td>
+<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?family=<!--$family2-->&group=<!--$group2-->&unit=<!--$unit2-->&command=on" target="_blank">Test</a> </td>
+</tr>
+<tr>
+<td><b>Befehl bei AUS:</b></td>
+<td><pre>/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?family=</font><font color="blue"><!--$family2--><font color="red">&amp;group=</font><font color="blue"><!--$group2--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit2--></font><font color="red">&amp;command=</font><font color="blue">off</font></pre></td>
+<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?family=<!--$family2-->&group=<!--$group2-->&unit=<!--$unit2-->&command=off" target="_blank">Test</a> </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</form>
+
+</div>
+</div>

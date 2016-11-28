@@ -28,6 +28,8 @@ ARGV3=$3 # Third argument is Plugin installation folder
 ARGV4=$4 # Forth argument is Plugin version
 ARGV5=$5 # Fifth argument is Base folder of LoxBerry
 
+/bin/sed -i "s:REPLACEINSTALLFOLDER:$ARGV5:g" $ARGV5/system/daemons/plugins/$ARGV2
+
 echo "**********************************************************"
 echo "*     Please reboot your LoxBerry after installation     *"
 echo "* Bitte starte Deinen LoxBerry neu nach der Installation *"

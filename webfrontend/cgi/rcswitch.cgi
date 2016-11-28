@@ -86,6 +86,12 @@ if ( $query{'group'} ne "" ) {
 if ( $query{'unit'} ne "" ) {
   our $unit = $query{'unit'};
   $unit = substr($unit,0,5);
+  $unit =~ tr/A-Z/a-z/; # all lower case
+  if ( $unit eq "a") {$unit = "1";};
+  if ( $unit eq "b") {$unit = "2";};
+  if ( $unit eq "c") {$unit = "3";};
+  if ( $unit eq "d") {$unit = "4";};
+  if ( $unit eq "e") {$unit = "5";};
   if ( $unit !~ /[0-9]/ ) {
     print "Wrong unit number. Giving up.";
   }

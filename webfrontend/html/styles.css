@@ -1,0 +1,83 @@
+.titles, .desc {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	letter-spacing: 0;
+	font-size: 11px;
+	letter-spacing: 0;
+}
+
+.buttons {
+	float: left;
+	clear: right;
+	margin: 1em;
+}
+
+.button {
+	min-width: 140px;
+	border: 1px solid #333;
+	background: #eedddd;
+	padding: 3px;
+}
+
+.switch {
+	display: block;
+	float: left;
+	background: #ee0000;
+	width: 210px;
+	height: 60px;
+	padding: 5px;
+	border: 1px solid #333;
+}
+
+.titles {
+	display: block;
+	height: 16px;
+	font-weight: bold;
+	color: #fff;
+}
+
+.title_left {
+	float: left;
+	width: 100px;
+}
+
+.title_right {
+	float: right;
+	text-align: right;
+}
+
+.dip {
+	float: left;
+	margin: 0 3px;
+	width: 15px;
+	height: 40px;
+	display: block;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+}
+
+.dip input {
+	border: none;
+}
+
+.on, .off {
+	float: left;
+	display: block;
+	height: 12px;
+	width: 15px;
+	border: 1px solid #999;
+	background: #fff;
+	margin: 0 0 5px 0;
+}
+
+.on  {
+	border-bottom: 15px solid #999;
+}
+
+.off  {
+	border-top: 15px solid #999;
+}
+
+.clear {
+	clear: both;
+}
