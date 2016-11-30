@@ -218,8 +218,9 @@ if ( param('type')  eq "intertechno" ) {
 
 }
 
-# Our host adress
+# Some vars for the template
 our $host = "$ENV{HTTP_HOST}";
+our $loginname = "$ENV{REMOTE_USER}";
 
 # Print Template
 
