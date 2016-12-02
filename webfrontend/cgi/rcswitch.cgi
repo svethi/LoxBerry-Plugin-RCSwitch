@@ -42,7 +42,7 @@ $psubfolder =~ s/(.*)\/(.*)\/(.*)$/$2/g;
 our $home = File::HomeDir->my_home;
 our $cfg           = new Config::Simple("$home/config/system/general.cfg");
 our $installfolder = $cfg->param("BASE.INSTALLFOLDER");
-our $pcfg          = new Config::Simple("$home/config/plugins/$psubfolder/RCSwitch.cfg"
+our $pcfg          = new Config::Simple("$home/config/plugins/$psubfolder/RCSwitch.cfg");
 our $transPIN      = $pcfg->param("general.TransmissionPIN");
 
 ##########################################################################
