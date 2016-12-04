@@ -43,13 +43,15 @@ our $installfolder;
 our $version;
 my  $home = File::HomeDir->my_home;
 our $psubfolder;
+our $pcfg;
+our $transPIN;
 
 ##########################################################################
 # Read Settings
 ##########################################################################
 
 # Version of this script
-$version = "0.0.1";
+$version = "0.0.2";
 
 # Figure out in which subfolder we are installed
 $psubfolder = abs_path($0);
@@ -58,6 +60,8 @@ $psubfolder =~ s/(.*)\/(.*)\/(.*)$/$2/g;
 $cfg             = new Config::Simple("$home/config/system/general.cfg");
 $installfolder   = $cfg->param("BASE.INSTALLFOLDER");
 $lang            = $cfg->param("BASE.LANG");
+$pcfg            = new Config::Simple("$home/config/plugins/$psubfolder/RCSwitch.cfg");
+$transPIN        = $pcfg->param("general.TransmissionPIN");
 
 # Init Language
 # Clean up lang variable
@@ -78,6 +82,27 @@ print "Content-Type: text/html\n\n";
 # Vars for template
 $template_title = "LoxBerry: RCSwitch Plugin";
 
+# Save settings
+if ( param('savesettings') ) {
+
+  $transPIN = param('gpiopin');
+  quotemeta($transPIN);
+  $pcfg->param("general.TransmissionPIN", "$transPIN");
+
+  # Save Config
+  $pcfg->save();
+
+} 
+
+# Select GPIO Pin
+if ( $transPIN eq "7" ) { our $selectedpin4 = "selected=selected" }
+elsif ( $transPIN eq "0" ) { our $selectedpin17 = "selected=selected" }
+elsif ( $transPIN eq "1" ) { our $selectedpin18 = "selected=selected" }
+elsif ( $transPIN eq "3" ) { our $selectedpin22 = "selected=selected" }
+elsif ( $transPIN eq "4" ) { our $selectedpin23 = "selected=selected" }
+elsif ( $transPIN eq "5" ) { our $selectedpin24 = "selected=selected" }
+elsif ( $transPIN eq "6" ) { our $selectedpin25 = "selected=selected" }
+else { our $selectedpin17 = "selected=selected" };
 
 # Calculate Elro commands
 if ( param('type')  eq "elro" ) {

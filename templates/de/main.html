@@ -1,10 +1,59 @@
 <p>
-Dieses Plugin hat keine Einstellungen. Bitte lese Dir die Dokumentation unter <a href="http://www.loxwiki.eu:80/x/JATL" target="_blank">http://www.loxwiki.eu:80/x/JATL</a> durch, um zu erfahren wie Du aus Loxone heraus Deine Funksteckdosen schalten kannst.
+Bitte lese Dir die Dokumentation unter <a href="http://www.loxwiki.eu:80/x/JATL" target="_blank">http://www.loxwiki.eu:80/x/JATL</a> durch, um zu erfahren wie Du aus Loxone heraus Deine Funksteckdosen schalten kannst.
 </p>
 
-<br>
+<p>
+&nbsp;
+</p>
+
+<form method="post" data-ajax="false" name="main_form0" id="main_form0" action="./index.cgi">
+<input type="hidden" name="savesettings" id="savesettings" value="1">
+<p>
+<table class="formtable" border=0 width="100%">
+<tr>
+<td width="25%">
+<label>PIN-Anschluss 433Mhz Sender:</label>
+</td>
+<td width="40%">
+<div class="ui-field-contain">
+  <select name="gpiopin" id="gpiopin">
+  <option value="7" <!--$selectedpin4-->>GPIO Pin 4</option>
+  <option value="0" <!--$selectedpin17-->>GPIO Pin 17</option>
+  <option value="1" <!--$selectedpin18-->>GPIO Pin 18</option>
+  <option value="3" <!--$selectedpin22-->>GPIO Pin 22</option>
+  <option value="4" <!--$selectedpin23-->>GPIO Pin 23</option>
+  <option value="5" <!--$selectedpin24-->>GPIO Pin 24</option>
+  <option value="6" <!--$selectedpin25-->>GPIO Pin 25</option>
+  </select>
+</div>
+</td>
+<td width="5%">
+&nbsp;
+</td>
+<td width="30%">
+<font size="-1">GPIO-Pin, an dem Pin 1 (ATAD, Daten) des 433Mhz Senders angeschlossen ist. Pinbelegung <a href="https://www.raspberrypi.org/documentation/usage/gpio/README.md" target=_blank">RaspPi1</a> und <a href="https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/README.md" target=_blank">RaspPi2+3</a>.</font>
+</td>
+</tr>
+<tr>
+<td colspan=4 align=center>
+<center>
+<button type="submit" form="main_form0" name="btnsubmit0" id="btnsubmit0" data-role="button" data-inline="true" data-mini="true" data-icon="check">Speichern</button>
+</center>
+</td>
+</tr>
+</table>
+</center>
+</p>
+
+<p>
+&nbsp;
+</p>
+
 <hr>
-<br>
+
+<p>
+&nbsp;
+</p>
 
 <center><h3>Befehle für LoxoneConfig ermitteln</h3></center>
 
