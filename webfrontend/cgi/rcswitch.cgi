@@ -42,6 +42,8 @@ $psubfolder =~ s/(.*)\/(.*)\/(.*)$/$2/g;
 our $home = File::HomeDir->my_home;
 our $cfg           = new Config::Simple("$home/config/system/general.cfg");
 our $installfolder = $cfg->param("BASE.INSTALLFOLDER");
+our $pcfg          = new Config::Simple("$home/config/plugins/$psubfolder/RCSwitch.cfg");
+our $transPIN      = $pcfg->param("general.TransmissionPIN");
 
 ##########################################################################
 # Main program
@@ -118,13 +120,13 @@ if ( $query{'command'} ne "" ) {
 }
 
 # Send command with rcswitch - do this 3 times to make sure the command could be received
-our $output = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 $family $group $unit $command 2>&1);
+our $output = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $family $group $unit $command 2>&1);
 if ( $? ne 0 ) {
   print "ERROR - Somehting went wrong. Could not send command. This is the error message: ";
 } else {
   print "OK - ";
-  our $output1 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 $family $group $unit $command 2>&1);
-  our $output2 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 $family $group $unit $command 2>&1);
+  our $output1 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $family $group $unit $command 2>&1);
+  our $output2 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $family $group $unit $command 2>&1);
 }
 
 print $output;
