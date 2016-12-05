@@ -55,6 +55,9 @@ void RCSwitch::setProtocol(int nProtocol) {
   else if (nProtocol == 2) {
 	  this->setPulseLength(650);
   }
+  else if (nProtocol == 3) {
+    this->setPulseLength(300);
+  }
 }
 
 /**
@@ -122,7 +125,7 @@ void RCSwitch::switchOn(char sFamily, int nGroup, int nDevice) {
 }
 
 /**
- * Switch a remote switch off (Type C Intertechno)
+ * Switch a remote switch off (Type C Intertechno_old)
  *
  * @param sFamily  Familycode (a..f)
  * @param nGroup   Number of group (1..4)
@@ -130,6 +133,28 @@ void RCSwitch::switchOn(char sFamily, int nGroup, int nDevice) {
  */
 void RCSwitch::switchOff(char sFamily, int nGroup, int nDevice) {
   this->sendTriState( this->getCodeWordC(sFamily, nGroup, nDevice, false) );
+}
+
+/**
+ * Switch a remote switch on (Type D Intertechno)
+ *
+ * @param lId      Id to be used (0..650000) "^([0-9]{1,7}|[1-5][0-9]{7}|6([0-6][0-9]{6}|7(0[0-9]{5}|10([0-7][0-9]{3}|8([0-7][0-9]{2}|8([0-5][0-9]|6[0-3]))))))$"
+ * @param nGroup   Number of group (0|1)
+ * @param nDevice  Number of device (0..15)
+ */
+void RCSwitch::switchOn(long lId, int nGroup, int nDevice) {
+  this->sendTriState( this->getCodeWordD(lId, nGroup, nDevice, true) );
+}
+
+/**
+ * Switch a remote switch off (Type D Intertechno)
+ *
+ * @param lId      Id to be used (0..9999999|59999999|66999999|7099999|107999|8799|859|63)
+ * @param nGroup   Number of group (0|1)
+ * @param nDevice  Number of device (0..15)
+ */
+void RCSwitch::switchOff(long lId, int nGroup, int nDevice) {
+  this->sendTriState( this->getCodeWordD(lId, nGroup, nDevice, false) );
 }
 
 /**
@@ -323,7 +348,7 @@ char* RCSwitch::getCodeWordA(char* sGroup, char* sDevice, boolean bOn) {
 
 
 /**
- * Like getCodeWord (Type C = Intertechno)
+ * Like getCodeWord (Type C = Intertechno_old)
  */
 char* RCSwitch::getCodeWordC(char sFamily, int nGroup, int nDevice, boolean bStatus) {
   static char sReturn[13];
@@ -354,11 +379,44 @@ char* RCSwitch::getCodeWordC(char sFamily, int nGroup, int nDevice, boolean bSta
 }
 
 /**
+ * Like getCodeWord (Type D = Intertechno)
+ */
+char* RCSwitch::getCodeWordD(long lid, int nGroup, int nDevice, boolean bStatus) {
+  static char sReturn[33];
+  int nReturnPos = 0;
+
+  if ( lid < 0 || lid > 67108863 || nGroup < 0 || nGroup > 1 || nDevice < 0 || nDevice > 15) {
+    return '\0';
+  }
+
+  char* sId = dec2binWzerofill(  lid, 26  );
+  for ( int i=0; i<26; i++) {
+    sReturn[i] = sId[i];
+  }
+  char* sGroup = dec2binWzerofill( nGroup, 1);
+  sReturn[26] = sGroup[0];
+  if (bStatus) {
+    sReturn[27] = '1';
+  } else {
+    sReturn[27] = '0';
+  }
+  char* sUnit = dec2binWzerofill( nDevice, 4);
+  for ( int i = 0; i<4; i++) {
+    sReturn[28+i] = sUnit[i];
+  }
+  sReturn[32] = '\0';
+  return sReturn;
+}
+
+
+/**
  * Sends a Code Word
  * @param sCodeWord   /^[10FS]*$/  -> see getCodeWord
  */
 void RCSwitch::sendTriState(char* sCodeWord) {
+  this->sendStart();
   for (int nRepeat=0; nRepeat<nRepeatTransmit; nRepeat++) {
+    //this->sendStart();
     int i = 0;
     while (sCodeWord[i] != '\0') {
       switch(sCodeWord[i]) {
@@ -373,6 +431,7 @@ void RCSwitch::sendTriState(char* sCodeWord) {
         break;
       }
       i++;
+      //this->sendSync();
     }
     this->sendSync();    
   }
@@ -431,6 +490,9 @@ void RCSwitch::send0() {
 	else if (this->nProtocol == 2) {
 		this->transmit(1,2);
 	}
+    	else if (this->nProtocol == 3) {
+        	this->transmit(1,5);
+    	}
 }
 
 /**
@@ -447,6 +509,9 @@ void RCSwitch::send1() {
 	else if (this->nProtocol == 2) {
 		this->transmit(2,1);
 	}
+    	else if (this->nProtocol == 3) {
+        	this->transmit(1,1);
+    	}
 }
 
 
@@ -456,8 +521,14 @@ void RCSwitch::send1() {
  * Waveform: | |___| |___
  */
 void RCSwitch::sendT0() {
-  this->transmit(1,3);
-  this->transmit(1,3);
+  if (this->nProtocol == 3) {
+	this->transmit(1,1);
+	this->transmit(1,4);
+  }
+  else {
+  	this->transmit(1,3);
+  	this->transmit(1,3);
+  }
 }
 
 /**
@@ -466,8 +537,13 @@ void RCSwitch::sendT0() {
  * Waveform: |   |_|   |_
  */
 void RCSwitch::sendT1() {
-  this->transmit(3,1);
-  this->transmit(3,1);
+  if (this->nProtocol == 3) {
+	this->transmit(1,4);
+	this->transmit(1,1);
+  } else {
+  	this->transmit(3,1);
+  	this->transmit(3,1);
+  }
 }
 
 /**
@@ -495,6 +571,20 @@ void RCSwitch::sendSync() {
 	else if (this->nProtocol == 2) {
 		this->transmit(1,10);
 	}
+    	else if (this->nProtocol == 3) {
+        	this->transmit(1,10);
+    	}
+}
+
+/**
+ * Send a "Start" Bit
+ *
+ */
+void RCSwitch::sendStart() {
+
+    if (this->nProtocol == 3) {
+		this->transmit(1,8);
+    }
 }
 
 /**
@@ -645,3 +735,24 @@ char* RCSwitch::dec2binWzerofill(unsigned long Dec, unsigned int bitLength){
   return bin;
 }
 
+int decToBin(int n, int binary[]) {
+	unsigned int i=1;
+	unsigned int x=0;
+	int y=0;
+	while(i<=n) {
+		i*=2;
+		x++;
+	}
+	i/=2;
+	x--;
+	for(y=(int)x;y>=0;y--) {
+		if((n-(int)i)>=0) {
+			n-=(int)i;
+			binary[(int)x-y]=1;
+		} else {
+			binary[(int)x-y]=0;
+		}
+		i/=2;
+	}
+	return (int)x;
+}
