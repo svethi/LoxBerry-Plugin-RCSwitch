@@ -12,11 +12,11 @@ if [ -x /usr/bin/logger ]; then
 fi
 
 # Create sudoers file
-if [ ! -e /etc/sudoers.d/$pluginname ]
-	then
-		if [ -x /usr/bin/logger ]; then 
-			/usr/bin/logger "loxberry-plugin-$pluginname - Adding sudoers permissions"
-		fi
-		echo %loxberry ALL = NOPASSWD: REPLACEINSTALLFOLDER/data/plugins/$pluginname/bin/send433 > /etc/sudoers.d/$pluginname
-		chmod 0440 /etc/sudoers.d/$pluginname
+if [ -x /usr/bin/logger ]; then 
+	/usr/bin/logger "loxberry-plugin-$pluginname - Adding sudoers permissions"
 fi
+echo %loxberry ALL = NOPASSWD: REPLACEINSTALLFOLDER/data/plugins/$pluginname/bin/send433 > /etc/sudoers.d/$pluginname
+chmod 0440 /etc/sudoers.d/$pluginname
+chmod 0755 REPLACEINSTALLFOLDER/data/plugins/$pluginname/bin/send433
+
+exit 0
