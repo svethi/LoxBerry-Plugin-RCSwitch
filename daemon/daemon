@@ -18,3 +18,5 @@ fi
 echo %loxberry ALL = NOPASSWD: REPLACEINSTALLFOLDER/data/plugins/$pluginname/bin/send433 > /etc/sudoers.d/$pluginname
 chmod 0440 /etc/sudoers.d/$pluginname
 chmod 0755 REPLACEINSTALLFOLDER/data/plugins/$pluginname/bin/send433
+
+exit 0
