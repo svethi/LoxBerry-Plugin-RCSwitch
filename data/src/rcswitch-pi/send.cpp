@@ -48,6 +48,7 @@ int main(int argc, char *argv[]) {
 	if (wiringPiSetup () == -1) return 1;
 	RCSwitch mySwitch = RCSwitch();
 	mySwitch.enableTransmit(PIN);
+	mySwitch.setPulseLength(296);
 	
 	if(argc == 4+overridePIN)
 	{

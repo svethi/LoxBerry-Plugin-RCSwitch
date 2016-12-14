@@ -283,7 +283,7 @@ char* RCSwitch::getCodeWordA(char* sGroup, int nChannelCode, boolean bStatus) {
     if (sGroup[i] == '0') {
       sReturn[nReturnPos++] = 'F';
     } else if (sGroup[i] == '1') {
-      sReturn[nReturnPos++] = '1';
+      sReturn[nReturnPos++] = '0';
     } else {
       return '\0';
     }
@@ -566,7 +566,7 @@ void RCSwitch::sendTF() {
 void RCSwitch::sendSync() {
 
     if (this->nProtocol == 1){
-		this->transmit(1,31);
+		this->transmit(1,34);
 	}
 	else if (this->nProtocol == 2) {
 		this->transmit(1,10);
