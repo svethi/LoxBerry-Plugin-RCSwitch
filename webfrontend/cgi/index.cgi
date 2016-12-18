@@ -51,7 +51,7 @@ our $transPIN;
 ##########################################################################
 
 # Version of this script
-$version = "0.0.2";
+$version = "0.0.4";
 
 # Figure out in which subfolder we are installed
 $psubfolder = abs_path($0);
@@ -128,19 +128,10 @@ if ( param('type')  eq "elro" ) {
   our $valueb9 = param('b[9]');
   if ( $valueb9 ) { our $statusb9 = "on" } else { our $statusb9 = "off" };
 
-  if ( ($valueb0 + $valueb1 + $valueb2 + $valueb3 + $valueb4) eq 1 ) {
-	if ( param('b[0]') ) { our $group1 = "1" }
-	elsif ( param('b[1]') ) { our $group1 = "2" }
-	elsif ( param('b[2]') ) { our $group1 = "3" }
-	elsif ( param('b[3]') ) { our $group1 = "4" }
-	elsif ( param('b[4]') ) { our $group1 = "5" }
-	else { our $group1 = "0" } ;
-  } else {
-	our $group1 = "$valueb0$valueb1$valueb2$valueb3$valueb4";
-	if ( $group1 eq "" ) { $group1 = "0"; }
-  }
+  our $group1 = "$valueb0$valueb1$valueb2$valueb3$valueb4";
+  if ( $group1 eq "" ) { $group1 = "0"; }
 
-  if ( ($valueb5 + $valueb6 + $valueb7 + $valueb8 + $valueb9) eq 1 ) {
+ if ( ($valueb5 + $valueb6 + $valueb7 + $valueb8 + $valueb9) eq 1 ) {
 	if ( param('b[5]') ) { our $unit1 = "1" }
 	elsif ( param('b[6]') ) { our $unit1 = "2" }
 	elsif ( param('b[7]') ) { our $unit1 = "3" }
@@ -148,7 +139,7 @@ if ( param('type')  eq "elro" ) {
 	elsif ( param('b[9]') ) { our $unit1 = "5" }
 	else { our $unit1 = "0" } ;
   } else {
-	our $unit1 = "$valueb0$valueb1$valueb2$valueb3$valueb4";
+	our $unit1 = "$valueb5$valueb6$valueb7$valueb8$valueb9";
 	if ( $unit1 eq "" ) { $unit1 = "0"; }
   }
 
@@ -179,44 +170,44 @@ if ( param('type')  eq "elro" ) {
 
 }
 
-# Calculate Intertechno commands
-if ( param('type')  eq "intertechno" ) {
+# Calculate Intertechno V1 commands
+if ( param('type')  eq "arctechv1" ) {
 
-  our $family2 = param('family');
-  if ( $family2 eq "A" ) { our $selectedA = "selected=selected" }
-  elsif ( $family2 eq "B" ) { our $selectedB = "selected=selected" }
-  elsif ( $family2 eq "C" ) { our $selectedC = "selected=selected" }
-  elsif ( $family2 eq "D" ) { our $selectedD = "selected=selected" }
-  elsif ( $family2 eq "E" ) { our $selectedE = "selected=selected" }
-  elsif ( $family2 eq "F" ) { our $selectedF = "selected=selected" }
-  elsif ( $family2 eq "G" ) { our $selectedG = "selected=selected" }
-  elsif ( $family2 eq "H" ) { our $selectedH = "selected=selected" }
-  elsif ( $family2 eq "I" ) { our $selectedI = "selected=selected" }
-  elsif ( $family2 eq "J" ) { our $selectedJ = "selected=selected" }
-  elsif ( $family2 eq "K" ) { our $selectedK = "selected=selected" }
-  elsif ( $family2 eq "L" ) { our $selectedL = "selected=selected" }
-  elsif ( $family2 eq "M" ) { our $selectedM = "selected=selected" }
-  elsif ( $family2 eq "N" ) { our $selectedN = "selected=selected" }
-  elsif ( $family2 eq "O" ) { our $selectedO = "selected=selected" }
-  elsif ( $family2 eq "P" ) { our $selectedP = "selected=selected" };
+  our $family2 = param('familyarcv1');
+  if ( $family2 eq "A" ) { our $selectedarcv1A = "selected=selected" }
+  elsif ( $family2 eq "B" ) { our $selectedarcv1B = "selected=selected" }
+  elsif ( $family2 eq "C" ) { our $selectedarcv1C = "selected=selected" }
+  elsif ( $family2 eq "D" ) { our $selectedarcv1D = "selected=selected" }
+  elsif ( $family2 eq "E" ) { our $selectedarcv1E = "selected=selected" }
+  elsif ( $family2 eq "F" ) { our $selectedarcv1F = "selected=selected" }
+  elsif ( $family2 eq "G" ) { our $selectedarcv1G = "selected=selected" }
+  elsif ( $family2 eq "H" ) { our $selectedarcv1H = "selected=selected" }
+  elsif ( $family2 eq "I" ) { our $selectedarcv1I = "selected=selected" }
+  elsif ( $family2 eq "J" ) { our $selectedarcv1J = "selected=selected" }
+  elsif ( $family2 eq "K" ) { our $selectedarcv1K = "selected=selected" }
+  elsif ( $family2 eq "L" ) { our $selectedarcv1L = "selected=selected" }
+  elsif ( $family2 eq "M" ) { our $selectedarcv1M = "selected=selected" }
+  elsif ( $family2 eq "N" ) { our $selectedarcv1N = "selected=selected" }
+  elsif ( $family2 eq "O" ) { our $selectedarcv1O = "selected=selected" }
+  elsif ( $family2 eq "P" ) { our $selectedarcv1P = "selected=selected" };
 
-  our $unittemp = param('unit');
-  if ( $unittemp eq "1" ) { our $selected1 = "selected=selected" }
-  elsif ( $unittemp eq "2" ) { our $selected2 = "selected=selected" }
-  elsif ( $unittemp eq "3" ) { our $selected3 = "selected=selected" }
-  elsif ( $unittemp eq "4" ) { our $selected4 = "selected=selected" }
-  elsif ( $unittemp eq "5" ) { our $selected5 = "selected=selected" }
-  elsif ( $unittemp eq "6" ) { our $selected6 = "selected=selected" }
-  elsif ( $unittemp eq "7" ) { our $selected7 = "selected=selected" }
-  elsif ( $unittemp eq "8" ) { our $selected8 = "selected=selected" }
-  elsif ( $unittemp eq "9" ) { our $selected9 = "selected=selected" }
-  elsif ( $unittemp eq "10" ) { our $selected10 = "selected=selected" }
-  elsif ( $unittemp eq "11" ) { our $selected11 = "selected=selected" }
-  elsif ( $unittemp eq "12" ) { our $selected12 = "selected=selected" }
-  elsif ( $unittemp eq "13" ) { our $selected13 = "selected=selected" }
-  elsif ( $unittemp eq "14" ) { our $selected14 = "selected=selected" }
-  elsif ( $unittemp eq "15" ) { our $selected15 = "selected=selected" }
-  elsif ( $unittemp eq "16" ) { our $selected16 = "selected=selected" };
+  our $unittemp = param('unitarcv1');
+  if ( $unittemp eq "1" ) { our $selectedarcv11 = "selected=selected" }
+  elsif ( $unittemp eq "2" ) { our $selectedarcv12 = "selected=selected" }
+  elsif ( $unittemp eq "3" ) { our $selectedarcv13 = "selected=selected" }
+  elsif ( $unittemp eq "4" ) { our $selectedarcv14 = "selected=selected" }
+  elsif ( $unittemp eq "5" ) { our $selectedarcv15 = "selected=selected" }
+  elsif ( $unittemp eq "6" ) { our $selectedarcv16 = "selected=selected" }
+  elsif ( $unittemp eq "7" ) { our $selectedarcv17 = "selected=selected" }
+  elsif ( $unittemp eq "8" ) { our $selectedarcv18 = "selected=selected" }
+  elsif ( $unittemp eq "9" ) { our $selectedarcv19 = "selected=selected" }
+  elsif ( $unittemp eq "10" ) { our $selectedarcv110 = "selected=selected" }
+  elsif ( $unittemp eq "11" ) { our $selectedarcv111 = "selected=selected" }
+  elsif ( $unittemp eq "12" ) { our $selectedarcv112 = "selected=selected" }
+  elsif ( $unittemp eq "13" ) { our $selectedarcv113 = "selected=selected" }
+  elsif ( $unittemp eq "14" ) { our $selectedarcv114 = "selected=selected" }
+  elsif ( $unittemp eq "15" ) { our $selectedarcv115 = "selected=selected" }
+  elsif ( $unittemp eq "16" ) { our $selectedarcv116 = "selected=selected" };
 
   if ( $unittemp > 0 && $unittemp <= 4) {
     our $group2 = "1";
@@ -240,6 +231,43 @@ if ( param('type')  eq "intertechno" ) {
   our $family2 = "0";
   our $group2 = "0";
   our $unit2 = "0";
+
+}
+
+# Calculate Intertechno V2 commands
+if ( param('type')  eq "arctechv2" ) {
+
+  our $unit3 = param('unitarcv2');
+  if ( $unit3 eq "0" ) { our $selectedarcv20 = "selected=selected" }
+  elsif ( $unit3 eq "1" ) { our $selectedarcv21 = "selected=selected" }
+  elsif ( $unit3 eq "2" ) { our $selectedarcv22 = "selected=selected" }
+  elsif ( $unit3 eq "3" ) { our $selectedarcv23 = "selected=selected" }
+  elsif ( $unit3 eq "4" ) { our $selectedarcv24 = "selected=selected" }
+  elsif ( $unit3 eq "5" ) { our $selectedarcv25 = "selected=selected" }
+  elsif ( $unit3 eq "6" ) { our $selectedarcv26 = "selected=selected" }
+  elsif ( $unit3 eq "7" ) { our $selectedarcv27 = "selected=selected" }
+  elsif ( $unit3 eq "8" ) { our $selectedarcv28 = "selected=selected" }
+  elsif ( $unit3 eq "9" ) { our $selectedarcv29 = "selected=selected" }
+  elsif ( $unit3 eq "10" ) { our $selectedarcv210 = "selected=selected" }
+  elsif ( $unit3 eq "11" ) { our $selectedarcv211 = "selected=selected" }
+  elsif ( $unit3 eq "12" ) { our $selectedarcv212 = "selected=selected" }
+  elsif ( $unit3 eq "13" ) { our $selectedarcv213 = "selected=selected" }
+  elsif ( $unit3 eq "14" ) { our $selectedarcv214 = "selected=selected" }
+  elsif ( $unit3 eq "15" ) { our $selectedarcv215 = "selected=selected" }
+
+  our $group3 = param('grouparcv2');
+
+  our $all3 = param('allarcv2');
+  if ( $all3 eq "0" ) { our $selectedarcv2all0 = "selected=selected" }
+  else { our $selectedarcv2all1 = "selected=selected" }
+
+} else {
+
+  our $family3 = "0";
+  our $group3 = "0";
+  our $unit3 = "0";
+  our $all3 = "0";
+  our $selectedarcv2all0 = "selected=selected";
 
 }
 
