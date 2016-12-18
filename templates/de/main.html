@@ -1,3 +1,49 @@
+<link rel="stylesheet" href="/plugins/rcswitch/styles.css">
+
+<script type="text/javascript">
+
+// DIP Switch for Elro
+function addEvent( obj, type, fn )
+{
+   if (obj.addEventListener) {
+      obj.addEventListener( type, fn, false );
+   } else if (obj.attachEvent) {
+      obj["e"+type+fn] = fn;
+      obj[type+fn] = function() { obj["e"+type+fn]( window.event ); }
+      obj.attachEvent( "on"+type, obj[type+fn] );
+   }
+}
+function removeEvent( obj, type, fn )
+{
+   if (obj.removeEventListener) {
+      obj.removeEventListener( type, fn, false );
+   } else if (obj.detachEvent) {
+      obj.detachEvent( "on"+type, obj[type+fn] );
+      obj[type+fn] = null;
+      obj["e"+type+fn] = null;
+   }
+}
+function init () 
+{
+	var sw=document.getElementsByName('sw[]');
+	for (var i=0;i<sw.length;i++) {
+		addEvent( sw[i], 'click', clickSW);
+	}
+}
+function clickSW() {
+	var input=this.children[0];
+	if (this.className == 'off') {
+		this.className = 'on';
+		input.value = "1";
+	} else {
+		this.className = 'off';
+		input.value = "0";
+	}
+}
+init();
+
+</script>
+
 <p>
 Bitte lese Dir die Dokumentation unter <a href="http://www.loxwiki.eu:80/x/JATL" target="_blank">http://www.loxwiki.eu:80/x/JATL</a> durch, um zu erfahren wie Du aus Loxone heraus Deine Funksteckdosen schalten kannst.
 </p>
@@ -60,57 +106,8 @@ Bitte lese Dir die Dokumentation unter <a href="http://www.loxwiki.eu:80/x/JATL"
 
 <p>
 Im folgenden kannst Du anhand der Einstellungen an Deiner Funksteckdose die korrekten Parameter für die Ein- und Ausschaltbefehle 
-für die LoxoneConfig ermitteln.
+für die ermitteln.
 </p>
-
-<link rel="stylesheet" href="/plugins/rcswitch/styles.css">
-
-<script type="text/JavaScript">
-
-function addEvent( obj, type, fn )
-{
-   if (obj.addEventListener) {
-      obj.addEventListener( type, fn, false );
-   } else if (obj.attachEvent) {
-      obj["e"+type+fn] = fn;
-      obj[type+fn] = function() { obj["e"+type+fn]( window.event ); }
-      obj.attachEvent( "on"+type, obj[type+fn] );
-   }
-}
-
-function removeEvent( obj, type, fn )
-{
-   if (obj.removeEventListener) {
-      obj.removeEventListener( type, fn, false );
-   } else if (obj.detachEvent) {
-      obj.detachEvent( "on"+type, obj[type+fn] );
-      obj[type+fn] = null;
-      obj["e"+type+fn] = null;
-   }
-}
-
-function init () 
-{
-	var sw=document.getElementsByName('sw[]');
-	for (var i=0;i<sw.length;i++) {
-		addEvent( sw[i], 'click', clickSW);
-	}
-}
-
-function clickSW() {
-	var input=this.children[0];
-	if (this.className == 'off') {
-		this.className = 'on';
-		input.value = "1";
-	} else {
-		this.className = 'off';
-		input.value = "0";
-	}
-}
-
-init();
-//window.onload = init;
-</script>
 
 <div class="ui-corner-all custom-corners">
 <div class="ui-bar ui-bar-a">
@@ -123,7 +120,8 @@ init();
 <table border=0 cellpadding=10 width="100%">
 <tr>
 <td>
-<img src="/plugins/rcswitch/elro.jpg" alt="Elro">
+<img src="/plugins/rcswitch/elro.jpg" alt="Elro"><br>
+<font size="-1">oder selbstlernende Steckdosen.</font>
 </td>
 <td>
 <div class="switch">
@@ -143,7 +141,7 @@ init();
 </div>
 </td>
 <td>
-<div class="buttons"><input class="button" type="submit" form="main_form1" name="btnsubmit1" id="btnsubmit1" value="LoxoneConfig Befehle erzeugen" /></div>
+<div class="buttons"><input class="button" type="submit" form="main_form1" name="btnsubmit1" id="btnsubmit1" value="Befehle erzeugen" /></div>
 </td>
 </tr>
 <tr>
@@ -154,13 +152,13 @@ init();
 <td colspan=2><pre>http://<!--$loginname-->:DEIN-LOXBERRY-PASSWORT@<!--$host--></pre></td>
 <tr>
 <td width="20%"><b>Befehl bei EIN:</b></td>
-<td width="70%"><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?group=</font><font color="blue"><!--$group1--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit1--></font><font color="red">&amp;command=</font><font color="blue">on</font></pre></td>
-<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?group=<!--$group1-->&unit=<!--$unit1-->&command=on" target="_blank">Test</a> </td>
+<td width="70%"><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?protocol=</font><font color="blue">elro</font><font color="red">&amp;group=</font><font color="blue"><!--$group1--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit1--></font><font color="red">&amp;command=</font><font color="blue">on</font></pre></td>
+<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?protocol=elro&group=<!--$group1-->&unit=<!--$unit1-->&command=on" target="_blank">Test / Lernen</a> </td>
 </tr>
 <tr>
 <td><b>Befehl bei AUS:</b></td>
-<td><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?group=</font><font color="blue"><!--$group1--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit1--></font><font color="red">&amp;command=</font><font color="blue">off</font></pre></td>
-<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?group=<!--$group1-->&unit=<!--$unit1-->&command=off" target="_blank">Test</a> </td>
+<td><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?protocol=</font><font color="blue">elro</font><font color="red">&amp;group=</font><font color="blue"><!--$group1--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit1--></font><font color="red">&amp;command=</font><font color="blue">off</font></pre></td>
+<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?protocol=elro&group=<!--$group1-->&unit=<!--$unit1-->&command=off" target="_blank">Test</a> </td>
 </tr>
 </table>
 </td>
@@ -175,16 +173,18 @@ init();
 
 <div class="ui-corner-all custom-corners">
 <div class="ui-bar ui-bar-a">
-  <h2>Intertechno Funksteckdosen und kompatible</h2>
+  <h2>Intertechno Funksteckdosen und kompatible - ALTES Protokoll</h2>
 </div>
 <div class="ui-body ui-body-a">
 
 <form method="post" data-ajax="false" name="main_form2" id="main_form2" action="./index.cgi">
-<input type="hidden" name="type" id="type" value="intertechno">
+<input type="hidden" name="type" id="type" value="arctechv1">
 <table border=0 cellpadding=10 width="100%">
 <tr>
 <td>
-<img src="/plugins/rcswitch/intertechno.jpg" alt="Intertechno">
+<img src="/plugins/rcswitch/intertechno.jpg" alt="Intertechno"><br>
+<font size="-1">oder selbstlernende Steckdosen, <br> Fernbedienung <i>mit</i> DIP- oder <br>Drehschalter.</font>
+
 </td>
 <td>
 <table border=0 cellspacing=10>
@@ -194,23 +194,23 @@ init();
 </td>
 <td>
 <div class="ui-field-contain">
-  <select name="family" id="family">
-  <option value="A" <!--$selectedA-->>A</option>
-  <option value="B" <!--$selectedB-->>B</option>
-  <option value="C" <!--$selectedC-->>C</option>
-  <option value="D" <!--$selectedD-->>D</option>
-  <option value="E" <!--$selectedE-->>E</option>
-  <option value="F" <!--$selectedF-->>F</option>
-  <option value="G" <!--$selectedG-->>G</option>
-  <option value="H" <!--$selectedH-->>H</option>
-  <option value="I" <!--$selectedI-->>I</option>
-  <option value="J" <!--$selectedJ-->>J</option>
-  <option value="K" <!--$selectedK-->>K</option>
-  <option value="L" <!--$selectedL-->>L</option>
-  <option value="M" <!--$selectedM-->>M</option>
-  <option value="N" <!--$selectedN-->>N</option>
-  <option value="O" <!--$selectedO-->>O</option>
-  <option value="P" <!--$selectedP-->>P</option>
+  <select name="familyarcv1" id="familyarcv1">
+  <option value="A" <!--$selectedarcv1A-->>A</option>
+  <option value="B" <!--$selectedarcv1B-->>B</option>
+  <option value="C" <!--$selectedarcv1C-->>C</option>
+  <option value="D" <!--$selectedarcv1D-->>D</option>
+  <option value="E" <!--$selectedarcv1E-->>E</option>
+  <option value="F" <!--$selectedarcv1F-->>F</option>
+  <option value="G" <!--$selectedarcv1G-->>G</option>
+  <option value="H" <!--$selectedarcv1H-->>H</option>
+  <option value="I" <!--$selectedarcv1I-->>I</option>
+  <option value="J" <!--$selectedarcv1J-->>J</option>
+  <option value="K" <!--$selectedarcv1K-->>K</option>
+  <option value="L" <!--$selectedarcv1L-->>L</option>
+  <option value="M" <!--$selectedarcv1M-->>M</option>
+  <option value="N" <!--$selectedarcv1N-->>N</option>
+  <option value="O" <!--$selectedarcv1O-->>O</option>
+  <option value="P" <!--$selectedarcv1P-->>P</option>
   </select>
 </div>
 </td>
@@ -219,23 +219,23 @@ init();
 </td>
 <td>
 <div class="ui-field-contain">
-  <select name="unit" id="unit">
-  <option value="1" <!--$selected1-->>1</option>
-  <option value="2" <!--$selected2-->>2</option>
-  <option value="3" <!--$selected3-->>3</option>
-  <option value="4" <!--$selected4-->>4</option>
-  <option value="5" <!--$selected5-->>5</option>
-  <option value="6" <!--$selected6-->>6</option>
-  <option value="7" <!--$selected7-->>7</option>
-  <option value="8" <!--$selected8-->>8</option>
-  <option value="9" <!--$selected9-->>9</option>
-  <option value="10" <!--$selected10-->>10</option>
-  <option value="11" <!--$selected11-->>11</option>
-  <option value="12" <!--$selected12-->>12</option>
-  <option value="13" <!--$selected13-->>13</option>
-  <option value="14" <!--$selected14-->>14</option>
-  <option value="15" <!--$selected15-->>15</option>
-  <option value="16" <!--$selected16-->>16</option>
+  <select name="unitarcv1" id="unitarcv1">
+  <option value="1" <!--$selectedarcv11-->>1</option>
+  <option value="2" <!--$selectedarcv12-->>2</option>
+  <option value="3" <!--$selectedarcv13-->>3</option>
+  <option value="4" <!--$selectedarcv14-->>4</option>
+  <option value="5" <!--$selectedarcv15-->>5</option>
+  <option value="6" <!--$selectedarcv16-->>6</option>
+  <option value="7" <!--$selectedarcv17-->>7</option>
+  <option value="8" <!--$selectedarcv18-->>8</option>
+  <option value="9" <!--$selectedarcv19-->>9</option>
+  <option value="10" <!--$selectedarcv110-->>10</option>
+  <option value="11" <!--$selectedarcv111-->>11</option>
+  <option value="12" <!--$selectedarcv112-->>12</option>
+  <option value="13" <!--$selectedarcv113-->>13</option>
+  <option value="14" <!--$selectedarcv114-->>14</option>
+  <option value="15" <!--$selectedarcv115-->>15</option>
+  <option value="16" <!--$selectedarcv116-->>16</option>
   </select>
 </div>
 </td>
@@ -243,7 +243,7 @@ init();
 </table>
 </td>
 <td>
-<div class="buttons"><input class="button" type="submit" form="main_form2" name="btnsubmit2" id="btnsubmit2" value="LoxoneConfig Befehle erzeugen" /></div>
+<div class="buttons"><input class="button" type="submit" form="main_form2" name="btnsubmit2" id="btnsubmit2" value="Befehle erzeugen" /></div>
 </td>
 </tr>
 <tr>
@@ -254,13 +254,13 @@ init();
 <td colspan=2><pre>http://<!--$loginname-->:DEIN-LOXBERRY-PASSWORT@<!--$host--></pre></td>
 <tr>
 <td width="20%"><b>Befehl bei EIN:</b></td>
-<td width="70%"><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?family=</font><font color="blue"><!--$family2--><font color="red">&amp;group=</font><font color="blue"><!--$group2--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit2--></font><font color="red">&amp;command=</font><font color="blue">on</font></pre></td>
-<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?family=<!--$family2-->&group=<!--$group2-->&unit=<!--$unit2-->&command=on" target="_blank">Test</a> </td>
+<td width="70%"><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?protocol=</font><font color="blue">arctechv1</font><font color="red">&amp;family=</font><font color="blue"><!--$family2--><font color="red">&amp;group=</font><font color="blue"><!--$group2--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit2--></font><font color="red">&amp;command=</font><font color="blue">on</font></pre></td>
+<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?protocol=archtechv1&family=<!--$family2-->&group=<!--$group2-->&unit=<!--$unit2-->&command=on" target="_blank">Test / Lernen</a> </td>
 </tr>
 <tr>
 <td><b>Befehl bei AUS:</b></td>
-<td><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?family=</font><font color="blue"><!--$family2--><font color="red">&amp;group=</font><font color="blue"><!--$group2--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit2--></font><font color="red">&amp;command=</font><font color="blue">off</font></pre></td>
-<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?family=<!--$family2-->&group=<!--$group2-->&unit=<!--$unit2-->&command=off" target="_blank">Test</a> </td>
+<td><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?protocol=</font><font color="blue">arctechv1</font><font color="red">&amp;family=</font><font color="blue"><!--$family2--><font color="red">&amp;group=</font><font color="blue"><!--$group2--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit2--></font><font color="red">&amp;command=</font><font color="blue">off</font></pre></td>
+<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?protocol=arctechv1&family=<!--$family2-->&group=<!--$group2-->&unit=<!--$unit2-->&command=off" target="_blank">Test</a> </td>
 </tr>
 </table>
 </td>
@@ -270,3 +270,109 @@ init();
 
 </div>
 </div>
+
+<br><br>
+
+<div class="ui-corner-all custom-corners">
+<div class="ui-bar ui-bar-a">
+  <h2>Intertechno Funksteckdosen und kompatible - NEUES Protokoll</h2>
+</div>
+<div class="ui-body ui-body-a">
+
+<form method="post" data-ajax="false" name="main_form3" id="main_form3" action="./index.cgi">
+<input type="hidden" name="type" id="type" value="arctechv2">
+<table border=0 cellpadding=10 width="100%">
+<tr>
+<td>
+<font size="-1">Selbstlernende Steckdosen, <br> Fernbedienung <i>ohne</i> DIP- oder <br> Drehschalter.</font>
+</td>
+<td>
+<table border=0 cellspacing=10>
+<tr>
+<td>
+<font size="-1">Gruppe ID:</font>
+</td>
+<td>
+  <table><tr>
+  <td><input type="text" maxlength="8" size="8"  name="grouparcv2" id="grouparcv2" value="<!--$group3-->"></td>
+  <td><a href="#" id="btnrand" data-role="button" data-inline="true" data-mini="true" data-icon="refresh" data-iconpos="notext"></a></td>
+  </tr></table>
+</td>
+<td>
+<font size="-1">Gerät:</font>
+</td>
+<td>
+<div class="ui-field-contain">
+  <select name="unitarcv2" id="unitarcv2">
+  <option value="0" <!--$selectedarcv20-->>0</option>
+  <option value="1" <!--$selectedarcv21-->>1</option>
+  <option value="2" <!--$selectedarcv22-->>2</option>
+  <option value="3" <!--$selectedarcv23-->>3</option>
+  <option value="4" <!--$selectedarcv24-->>4</option>
+  <option value="5" <!--$selectedarcv25-->>5</option>
+  <option value="6" <!--$selectedarcv26-->>6</option>
+  <option value="7" <!--$selectedarcv27-->>7</option>
+  <option value="8" <!--$selectedarcv28-->>8</option>
+  <option value="9" <!--$selectedarcv29-->>9</option>
+  <option value="10" <!--$selectedarcv210-->>10</option>
+  <option value="11" <!--$selectedarcv211-->>11</option>
+  <option value="12" <!--$selectedarcv212-->>12</option>
+  <option value="13" <!--$selectedarcv213-->>13</option>
+  <option value="14" <!--$selectedarcv214-->>14</option>
+  <option value="15" <!--$selectedarcv215-->>15</option>
+  </select>
+</div>
+</td>
+<td>
+<font size="-1">Gruppe schalten:</font>
+</td>
+<td>
+<select name="allarcv2" id="allarcv2" data-mini="true" data-track-theme="e" data-role="slider">
+<option value="0" <!--$selectedarcv2all0-->>Nein</option>
+<option value="1" <!--$selectedarcv2all1-->>Ja</option>
+</select>
+</tr>
+</table>
+</td>
+<td>
+<div class="buttons"><input class="button" type="submit" form="main_form3" name="btnsubmit3" id="btnsubmit3" value="Befehle erzeugen" /></div>
+</td>
+</tr>
+<tr>
+<td colspan=3>
+<table border=0 cellspacing=10 width="100%">
+<tr>
+<td width="20%"><b>Adresse:</b></td>
+<td colspan=2><pre>http://<!--$loginname-->:DEIN-LOXBERRY-PASSWORT@<!--$host--></pre></td>
+<tr>
+<td width="20%"><b>Befehl bei EIN:</b></td>
+<td width="70%"><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?protocol=</font><font color="blue">arctechv2</font><font color="red">&amp;all=</font><font color="blue"><!--$all3--><font color="red">&amp;group=</font><font color="blue"><!--$group3--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit3--></font><font color="red">&amp;command=</font><font color="blue">on</font></pre></td>
+<td width="10%"><a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?protocol=arctechv2&all=<!--$all3-->&group=<!--$group3-->&unit=<!--$unit3-->&command=on" target="_blank">Test / Lernen</a>
+</tr>
+<tr>
+<td><b>Befehl bei AUS:</b></td>
+<td><pre>/admin/plugins/<!--$psubfolder-->/rcswitch.cgi<font color="red">?protocol=</font><font color="blue">arctechv2</font><font color="red">&amp;all=</font><font color="blue"><!--$all3--><font color="red">&amp;group=</font><font color="blue"><!--$group3--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unit3--></font><font color="red">&amp;command=</font><font color="blue">off</font></pre></td>
+<td width="10%"> <a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/rcswitch.cgi?protocol=arctechv2&all=<!--$all3-->&group=<!--$group3-->&unit=<!--$unit3-->&command=off" target="_blank">Test</a> </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</form>
+
+<script type="text/javascript">
+
+// Randonized Group ID
+$(document).ready(function() {   
+    $('#btnrand').click(function() {   
+    //var num = Math.floor(1 + (Math.random() * Math.pow(10, gRandLength)));
+    var num = Math.floor(Math.random() * (67108863)) + 1;
+    $('#grouparcv2').val(num);
+    });
+});
+
+</script>
+
+</div>
+</div>
+

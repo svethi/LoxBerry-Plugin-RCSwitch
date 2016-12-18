@@ -33,7 +33,7 @@ use Config::Simple;
 ##########################################################################
 
 # Version of this script
-our $version = "0.0.3";
+our $version = "0.0.5";
 
 # Figure out in which subfolder we are installed
 our $psubfolder = abs_path($0);
@@ -76,9 +76,10 @@ if ( $query{'family'} ne "" ) {
 
 if ( $query{'group'} ne "" ) {
   our $group = $query{'group'};
-  $group = substr($group,0,5);
+  $group = substr($group,0,8);
   if ( $group !~ /[0-9]/ ) {
     print "Wrong group number. Giving up.";
+    exit;
   }
 } else {
   print "Missing group number. Giving up.";
@@ -96,6 +97,7 @@ if ( $query{'unit'} ne "" ) {
   if ( $unit eq "e") {$unit = "5";};
   if ( $unit !~ /[0-9]/ ) {
     print "Wrong unit number. Giving up.";
+    exit;
   }
 } else {
   print "Missing unit number. Giving up.";
@@ -113,20 +115,112 @@ if ( $query{'command'} ne "" ) {
   $command = substr($command,0,1);
   if ( $command !~ /[0-9]/ ) {
     print "Wrong command. Giving up.";
+    exit;
   }
 } else {
   print "Missing command. Giving up.";
   exit;
 }
 
-# Send command with rcswitch - do this 3 times to make sure the command could be received
-our $output = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $family $group $unit $command 2>&1);
-if ( $? ne 0 ) {
-  print "ERROR - Somehting went wrong. Could not send command. This is the error message: ";
+if ( $query{'all'} ne "" ) {
+  our $all = $query{'all'};
+  $all = substr($all,0,1);
+  if ( $all !~ /[0-1]/ ) {
+    print "Wrong parameter for 'all'. Giving up.";
+    exit;
+  }
 } else {
-  print "OK - ";
-  our $output1 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $family $group $unit $command 2>&1);
-  our $output2 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $family $group $unit $command 2>&1);
+   our $all = "0";
+}
+
+if ( $query{'protocol'} ne "" ) {
+  our $protocol = $query{'protocol'};
+  if ( $protocol !~ /[A-Za-z0-9]/ ) {
+    print "Wrong protocol. Giving up.";
+    exit;
+  }
+} else {
+  #print "Missing protocol. Giving up.";
+  #exit;
+  # Backward compatibility for old versions prior 0.9 (no protocol parameter)
+  our $protocol = "elro";
+}
+
+if ( $query{'pulselength'} ne "" ) {
+  our $pulselength = $query{'pulselength'};
+  if ( $pulselength !~ /[0-9]/ ) {
+    print "Wrong pulse length. Giving up.";
+    exit;
+  }
+  $pulselength = "-pl=" . $pulselength;
+}
+
+our $send = 0;
+
+if ( $protocol eq "elro" ) {
+
+  # Send command with rcswitch - do this 3 times to make sure the command could be received
+  # Note: Family isn't needed for Elro, but is used here for backward compatibility for old version prior 0.9 (no protocol parameter and therefore
+  # standard is "elro"
+  print "/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $family $group $unit $command\n\n";
+  our $output = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $family $group $unit $command 2>&1);
+  if ( $? ne 0 ) {
+    $send = 1;
+    print "ERROR - Somehting went wrong. Could not send command. This is the error message: ";
+  } else {
+    $send = 1;
+    print "OK:\n";
+    our $output1 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $family $group $unit $command 2>&1);
+    our $output2 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $family $group $unit $command 2>&1);
+  }
+
+}
+
+if ( $protocol eq "arctechv1" ) {
+
+  # Send command with rcswitch - do this 3 times to make sure the command could be received
+  # Note: Family isn't needed for Elro, but is used here for backward compatibility for old version prior 0.9 (no protocol parameter and therefore
+  # standard is "elro"
+  print "/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $family $group $unit $command\n\n";
+  our $output = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $family $group $unit $command 2>&1);
+  if ( $? ne 0 ) {
+    $send = 1;
+    print "ERROR - Somehting went wrong. Could not send command. This is the error message: ";
+  } else {
+    $send = 1;
+    print "OK:\n";
+    our $output1 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $family $group $unit $command 2>&1);
+    our $output2 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $family $group $unit $command 2>&1);
+  }
+
+}
+
+if ( $protocol eq "arctechv2" ) {
+
+  # Send command with rcswitch - do this 3 times to make sure the command could be received
+  # Note: Family isn't needed for Elro, but is used here for backward compatibility for old version prior 0.9 (no protocol parameter and therefore
+  # standard is "elro"
+  print "/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $group $all $unit $command\n\n";
+  our $output = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $group $all $unit $command 2>&1);
+  if ( $? ne 0 ) {
+    $send = 1;
+    print "ERROR - Somehting went wrong. Could not send command. This is the error message: ";
+  } else {
+    $send = 1;
+    print "OK:\n";
+    our $output1 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $group $all $unit $command 2>&1);
+    our $output2 = qx(/usr/bin/sudo $installfolder/data/plugins/$psubfolder/bin/send433 -p=$transPIN $pulselength $group $all $unit $command 2>&1);
+  }
+
+}
+
+if ( !$send ) {
+  print "Unknown protocol. Giving up.";
+  exit;
+}
+
+if ( !$output ) {
+  $output = "Segmentation fault.";
 }
 
 print $output;
