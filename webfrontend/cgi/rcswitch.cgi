@@ -33,7 +33,7 @@ use Config::Simple;
 ##########################################################################
 
 # Version of this script
-our $version = "0.0.4";
+our $version = "0.0.5";
 
 # Figure out in which subfolder we are installed
 our $psubfolder = abs_path($0);
@@ -129,6 +129,8 @@ if ( $query{'all'} ne "" ) {
     print "Wrong parameter for 'all'. Giving up.";
     exit;
   }
+} else {
+   our $all = "0";
 }
 
 if ( $query{'protocol'} ne "" ) {
