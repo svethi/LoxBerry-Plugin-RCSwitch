@@ -36,18 +36,40 @@ int main(int argc, char *argv[]) {
      */
     int PIN = 0;
     int overridePIN = 0;
+    int PULSELENGTH = 0;
 	if(argc > 4) {
 		std::string arg = argv[1];
 		if( arg.substr(0,3) == "-p=" ) {
-			overridePIN = 1;
+			overridePIN ++;
 			if(atoi(arg.substr(3).c_str()) > 0) {
 				PIN = atoi(arg.substr(3).c_str());
+				printf("setting PIN to %i\n", PIN);
+			}
+		}
+		arg = argv[1];
+		if( arg.substr(0,4) == "-pl=" ) {
+			overridePIN ++;
+			if(atoi(arg.substr(4).c_str()) > 0) {
+				PULSELENGTH = atoi(arg.substr(4).c_str());
+				printf("setting PulseLength to %i\n", PULSELENGTH);
+			}
+		} else {
+			arg = argv[2];
+			if( arg.substr(0,4) == "-pl=" ) {
+				overridePIN ++;
+				if(atoi(arg.substr(4).c_str()) > 0) {
+					PULSELENGTH = atoi(arg.substr(4).c_str());
+					printf("setting PulseLength to %i\n", PULSELENGTH);
+				}
 			}
 		}
 	}
 	if (wiringPiSetup () == -1) return 1;
 	RCSwitch mySwitch = RCSwitch();
 	mySwitch.enableTransmit(PIN);
+	if (PULSELENGTH > 0) {
+		mySwitch.setPulseLength(PULSELENGTH);
+	}
 	
 	if(argc == 4+overridePIN)
 	{

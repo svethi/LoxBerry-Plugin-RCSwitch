@@ -283,7 +283,7 @@ char* RCSwitch::getCodeWordA(char* sGroup, int nChannelCode, boolean bStatus) {
     if (sGroup[i] == '0') {
       sReturn[nReturnPos++] = 'F';
     } else if (sGroup[i] == '1') {
-      sReturn[nReturnPos++] = '1';
+      sReturn[nReturnPos++] = '0';
     } else {
       return '\0';
     }
@@ -414,9 +414,9 @@ char* RCSwitch::getCodeWordD(long lid, int nGroup, int nDevice, boolean bStatus)
  * @param sCodeWord   /^[10FS]*$/  -> see getCodeWord
  */
 void RCSwitch::sendTriState(char* sCodeWord) {
-  this->sendStart();
+  //this->sendStart();
   for (int nRepeat=0; nRepeat<nRepeatTransmit; nRepeat++) {
-    //this->sendStart();
+    this->sendStart();
     int i = 0;
     while (sCodeWord[i] != '\0') {
       switch(sCodeWord[i]) {
@@ -467,10 +467,18 @@ void RCSwitch::transmit(int nHighPulses, int nLowPulses) {
             this->disableReceive();
             disabled_Receive = true;
         }
-        digitalWrite(this->nTransmitterPin, HIGH);
+        for(int i=0; i<nHighPulses; i++) {
+          digitalWrite(this->nTransmitterPin, HIGH);
+          delayMicroseconds( this->nPulseLength);
+        }
+        for(int i=0; i<nLowPulses; i++) {
+          digitalWrite(this->nTransmitterPin, LOW);
+          delayMicroseconds( this->nPulseLength);
+	}
+        /*digitalWrite(this->nTransmitterPin, HIGH);
         delayMicroseconds( this->nPulseLength * nHighPulses);
         digitalWrite(this->nTransmitterPin, LOW);
-        delayMicroseconds( this->nPulseLength * nLowPulses);
+        delayMicroseconds( this->nPulseLength * nLowPulses);* +++ old Version with timing Problems on Raspberry */
         if(disabled_Receive){
             this->enableReceive(nReceiverInterrupt_backup);
         }
