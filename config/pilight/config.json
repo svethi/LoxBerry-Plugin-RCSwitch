@@ -1,0 +1,24 @@
+{
+	"devices": { },
+	"gui": { },
+	"rules": { },
+	"settings": {
+		"log-level": 3,
+		"pid-file": "/var/run/pilight.pid",
+		"log-file": "REPLACEINSTALLFOLDER/log/plugins/REPLACEPLUGINFOLDER/pilight.log",
+		"webserver-enable": 0,
+		"webserver-root": "REPLACEINSTALLFOLDER/config/plugins/REPLACEPLUGINFOLDER/pilight",
+		"webserver-http-port": 5001,
+		"webserver-cache": 0,
+		"whitelist": "",
+		"stats-enable": 0,
+		"watchdog-enable": 0
+	},
+	"hardware": {
+		"433gpio": {
+			"sender": 0,
+			"receiver": -1
+		}
+	},
+	"registry": { }
+}
