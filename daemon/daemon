@@ -16,11 +16,9 @@ if [ -x /usr/bin/logger ]; then
 	/usr/bin/logger "loxberry-plugin-$pluginname - Adding sudoers permissions"
 fi
 echo %loxberry ALL = NOPASSWD: REPLACEINSTALLFOLDER/data/plugins/$pluginname/bin/send433 > /etc/sudoers.d/$pluginname
+echo %loxberry ALL = NOPASSWD: /etc/init.d/pilight >> /etc/sudoers.d/$pluginname
 chmod 0440 /etc/sudoers.d/$pluginname
 chmod 0755 REPLACEINSTALLFOLDER/data/plugins/$pluginname/bin/send433
-
-echo %loxberry ALL = NOPASSWD: /etc/init.d/pilight > /etc/sudoers.d/$pluginname
-chmod 0440 /etc/sudoers.d/$pluginname
 
 # Installing pilight
 if [ ! -x /usr/local/sbin/pilight-daemon ]; then
@@ -30,7 +28,7 @@ if [ ! -x /usr/local/sbin/pilight-daemon ]; then
   echo "deb http://apt.pilight.org/ stable main" > /etc/apt/sources.list.d/pilight.list
   /usr/bin/wget -O - http://apt.pilight.org/pilight.key | apt-key add -
   /usr/bin/apt-get update
-  /usr/bin/apt-get -Y install pilight
+  /usr/bin/apt-get -y install pilight
 fi
 
 # Configure pilight
@@ -40,7 +38,7 @@ fi
 if [ -d /etc/pilight ]; then
   service pilight stop
   mv /etc/pilight /etc/pilight.orig
-  ln -s REPLACEINSTALLFOLDER/config/plugins/REPLACEPLUGIN/pilight /etc/pilight
+  ln -s REPLACEINSTALLFOLDER/config/plugins/REPLACEPLUGINFOLDER/pilight /etc/pilight
   service pilight start
 fi
 
