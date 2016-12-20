@@ -92,6 +92,29 @@ if ( param('savesettings') ) {
   # Save Config
   $pcfg->save();
 
+  $output = qx(sudo /etc/init.d/pilight stop);
+  our $found = 0;
+  open(F,"+<$home/config/plugins/$psubfolder/pilight/config.json");
+    flock(F,2);
+    our @data = <F>;
+    seek(F,0,0);
+    truncate(F,0);
+    foreach (@data){
+      s/[\n\r]//g;
+      if ( $_ =~ /433gpio/ ) {
+        $found = 1;
+      }
+      if ( $_ =~ /sender/ && $found ) {
+        print F "		\"sender\": $transPIN,\n";
+        $found = 0;
+        next;
+      }
+      print F "$_\n";
+    }
+
+  close(F);
+  $output = qx(sudo /etc/init.d/pilight start);
+
 } 
 
 # Select GPIO Pin
