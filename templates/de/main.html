@@ -109,9 +109,16 @@ Im folgenden kannst Du anhand der Einstellungen an Deiner Funksteckdose die korr
 für die ermitteln.
 </p>
 
+<p>
+Das Plugin bietet zwei Verfahren die Steckdosen anzusprechen: RCSwitch und <a href="https://www.pilight.org/" target="_blank">Pilight</a>. Hierbei
+handelt es sich um zwei unterschiedliche Softwarelösungen. Wenn Deine Steckdosen unterstützt werden, empfehlen wir RCSwitch zu verwenden. Dieses
+ist eine sehr stabile Softwarelösung, unterstützt aber nur Elro- und Intertechnosteckdosen sowie kompatible Systeme. Pilight unterstützt eine sehr
+große Anzahl an weiteren Systemen, ist aber auf Grund des Aufbaus als Serversystem mit einem notwendigen laufenden Daemon eventuell etwas fehleranfälliger.
+</p>
+
 <div class="ui-corner-all custom-corners">
 <div class="ui-bar ui-bar-a">
-  <h2>Elro Funksteckdosen und kompatible</h2>
+  <h2>RCSWITCH: Elro Funksteckdosen und kompatible</h2>
 </div>
 <div class="ui-body ui-body-a">
 
@@ -173,7 +180,7 @@ für die ermitteln.
 
 <div class="ui-corner-all custom-corners">
 <div class="ui-bar ui-bar-a">
-  <h2>Intertechno Funksteckdosen und kompatible - ALTES Protokoll</h2>
+  <h2>RCSWITCH: Intertechno Funksteckdosen und kompatible - ALTES Protokoll</h2>
 </div>
 <div class="ui-body ui-body-a">
 
@@ -275,7 +282,7 @@ für die ermitteln.
 
 <div class="ui-corner-all custom-corners">
 <div class="ui-bar ui-bar-a">
-  <h2>Intertechno Funksteckdosen und kompatible - NEUES Protokoll</h2>
+  <h2>RCSWITCH: Intertechno Funksteckdosen und kompatible - NEUES Protokoll</h2>
 </div>
 <div class="ui-body ui-body-a">
 
@@ -376,3 +383,142 @@ $(document).ready(function() {
 </div>
 </div>
 
+<br><br>
+
+<div class="ui-corner-all custom-corners">
+<div class="ui-bar ui-bar-a">
+  <h2>PILIGHT: Zahlreiche verschiedene Funksteckdosen-Systeme</h2>
+</div>
+<div class="ui-body ui-body-a">
+
+<form method="post" data-ajax="false" name="main_form4" id="main_form4" action="./index.cgi">
+<input type="hidden" name="type" id="type" value="pilight">
+<table border=0 cellpadding=10 width="100%">
+<tr>
+<td width="20%">
+<font size="-1"><a href="https://wiki.pilight.org/doku.php/protocols#switches" target="_blank">Zahlreiche Steckdosensysteme mit 
+unterschiedlichen Funk-Protokollen</a></font>
+</td>
+<td>
+<table border=0 cellspacing=10>
+<tr>
+<td>
+<font size="-1">Protokoll:</font>
+</td>
+<td>
+  <select name="protocolpl" id="protocolpl">
+  <option value="beamish_switch" <!--$selectedbeamish_switch--> >Beamish Switches</option>
+  <option value="brennenstuhl" <!--$selectedbrennenstuhl--> >Brennenstuhl Comfort</option>
+  <option value="byebyestandby" <!--$selectedbyebyestandby--> >Bye Bye Standby Switches</option>
+  <option value="clarus_switch" <!--$selectedclarus_switch--> >Clarus Switches</option>
+  <option value="cleverwatts" <!--$selectedcleverwatts--> >Cleverwatts Switches</option>
+  <option value="coco_switch" <!--$selectedcoco_switch--> >CoCo Technologies Switches</option>
+  <option value="cogex" <!--$selectedcogex--> >Cogex Switches</option>
+  <option value="conrad_rsl_switch" <!--$selectedconrad_rsl_switch--> >Conrad RSL Switches</option>
+  <option value="daycom" <!--$selecteddaycom--> >Daycom switches</option>
+  <option value="dio_screen" <!--$selecteddio_screen--> >DI-O Screens</option>
+  <option value="dio_switch" <!--$selecteddio_switch-->>D-IO Switches</option>
+  <option value="duwi" <!--$selectedduwi-->>Düwi Terminal Switches</option>
+  <option value="ehome" <!--$selectedehome-->>eHome Switches</option>
+  <option value="elro_300_switch" <!--$selectedelro_300_switch-->>Elro 300 Series Switches</option>
+  <option value="elro_400_switch" <!--$selectedelro_400_switch-->>Elro 400 Series Switches</option>
+  <option value="elro_800_switch" <!--$selectedelro_800_switch-->>Elro 800 series Switches</option>
+  <option value="eurodomest" <!--$selectedeurodomest-->>Eurodomest Switches</option>
+  <option value="generic_dimmer" <!--$selectedgeneric_dimmer-->>Generic Dimmers</option>
+  <option value="generic_label" <!--$selectedgeneric_label-->>Generic Label</option>
+  <option value="generic_screen" <!--$selectedgeneric_screen-->>Generic Screens</option>
+  <option value="generic_switch" <!--$selectedgeneric_switch-->>Generic Switches</option>
+  <option value="generic_weather" <!--$selectedgeneric_weather-->>Generic Weather Stations</option>
+  <option value="heitech" <!--$selectedheitech-->>Heitech series Switches</option>
+  <option value="impuls" <!--$selectedimpuls-->>Impuls Switches</option>
+  <option value="intertechno_old" <!--$selectedintertechno_old-->>Old Intertechno Switches</option>
+  <option value="intertechno_switch" <!--$selectedintertechno_switch-->>Intertechno Switches</option>
+  <option value="kaku_dimmer" <!--$selectedkaku_dimmer-->>KlikAanKlikUit Dimmers</option>
+  <option value="kaku_screen" <!--$selectedkaku_screen-->>KlikAanKlikUit Screens</option>
+  <option value="kaku_screen_old" <!--$selectedkaku_screen_old-->>Old KlikAanKlikUit Screens</option>
+  <option value="kaku_switch" <!--$selectedkaku_switch-->>KlikAanKlikUit Switches</option>
+  <option value="kaku_switch_old" <!--$selectedkaku_switch_old-->>Old KlikAanKlikUit Switches</option>
+  <option value="logilink_switch" <!--$selectedlogilink_switch-->>Logilink Switches</option>
+  <option value="mumbi" <!--$selectedmumbi-->>Mumbi Switches</option>
+  <option value="nexa_switch" <!--$selectednexa_switch-->>Nexa Switches</option>
+  <option value="openweathermap" <!--$selectedopenweathermap-->>Open Weather Map API</option>
+  <option value="pollin" <!--$selectedpollin-->>Pollin Switches</option>
+  <option value="program" <!--$selectedprogram-->>Start / Stop / State of a program</option>
+  <option value="promax" <!--$selectedpromax-->>Pro MAX Switches</option>
+  <option value="quigg_gt1000" <!--$selectedquigg_gt1000-->>Quigg GT-1000 protocol</option>
+  <option value="quigg_gt7000" <!--$selectedquigg_gt7000-->>Quigg GT-7000 Switches</option>
+  <option value="quigg_screen" <!--$selectedquigg_screen-->>Quigg Switch Screen</option>
+  <option value="raw" <!--$selectedraw-->>Raw Codes</option>
+  <option value="rc101" <!--$selectedrc101-->>rc101 Switches</option>
+  <option value="rc102" <!--$selectedrc102-->>rc102 Switches</option>
+  <option value="relay" <!--$selectedrelay-->>GPIO Connected Relays</option>
+  <option value="rsl366" <!--$selectedrsl366-->>RSL366 Switches</option>
+  <option value="selectremote" <!--$selectedselectremote-->>SelectRemote Switches</option>
+  <option value="silvercrest" <!--$selectedsilvercrest-->>Silvercrest Switches</option> 
+  <option value="techlico_switch" <!--$selectedtechlico_switch-->>TechLiCo Lamp</option>
+  <option value="wunderground" <!--$selectedwunderground-->>Weather Underground API</option>
+  <option value="x10" <!--$selectedx10-->>x10 based devices</option>
+  </select>
+</td>
+<td>
+<font size="-1">Gruppe schalten:</font>
+</td>
+<td>
+<select name="allpl" id="allpl" data-mini="true" data-track-theme="e" data-role="slider">
+<option value="0" <!--$selectedallpl0-->>Nein</option>
+<option value="1" <!--$selectedallpl1-->>Ja</option>
+</select>
+</td>
+</tr>
+</table>
+<table border=0 cellspacing=10>
+<tr>
+<td>
+<font size="-1">ID:</font>
+</td>
+<td>
+<input type="text" maxlength="8" size="8"  name="idpl" id="idpl" value="<!--$idpl-->">
+</td>
+<td>
+<font size="-1">Systemcode:</font>
+</td>
+<td>
+<input type="text" maxlength="8" size="8"  name="systemcodepl" id="systemcodepl" value="<!--$systemcodepl-->">
+</td>
+<td>
+<font size="-1">Gerät:</font>
+</td>
+<td>
+<input type="text" size="5"  name="unitpl" id="unitpl" value="<!--$unitpl-->">
+</td>
+</tr>
+</table>
+</td>
+<td>
+<div class="buttons"><input class="button" type="submit" form="main_form4" name="btnsubmit4" id="btnsubmit4" value="Befehle erzeugen" /></div>
+</td>
+</tr>
+<tr>
+<td colspan=3>
+<table border=0 cellspacing=10 width="100%">
+<tr>
+<td width="20%"><b>Adresse:</b></td>
+<td colspan=2><pre>http://<!--$loginname-->:DEIN-LOXBERRY-PASSWORT@<!--$host--></pre></td>
+<tr>
+<td width="20%"><b>Befehl bei EIN:</b></td>
+<td width="70%"><pre>/admin/plugins/<!--$psubfolder-->/pilight.cgi<font color="red">?protocol=</font><font color="blue"><!--$protocolpl--></font><font color="red">&amp;all=</font><font color="blue"><!--$allpl--><font color="red">&amp;id=</font><font color="blue"><!--$idpl--></font><font color="red">&amp;systemcode=</font><font color="blue"><!--$systemcodepl--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unitpl--></font><font color="red">&amp;command=</font><font color="blue">on</font></pre></td>
+<td width="10%"><a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/pilight.cgi?protocol=<!--$protocolpl-->&all=<!--$allpl-->&id=<!--$idpl-->&systemcode=<!--$systemcodepl-->&unit=<!--$unitpl-->&command=on" target="_blank">Test / Lernen</a>
+</tr>
+<tr>
+<td><b>Befehl bei AUS:</b></td>
+<td width="70%"><pre>/admin/plugins/<!--$psubfolder-->/pilight.cgi<font color="red">?protocol=</font><font color="blue"><!--$protocolpl--></font><font color="red">&amp;all=</font><font color="blue"><!--$allpl--><font color="red">&amp;id=</font><font color="blue"><!--$idpl--></font><font color="red">&amp;systemcode=</font><font color="blue"><!--$systemcodepl--></font><font color="red">&amp;unit=</font><font color="blue"><!--$unitpl--></font><font color="red">&amp;command=</font><font color="blue">off</font></pre></td>
+<td width="10%"><a id="btnteston" data-role="button" data-inline="true" data-mini="true" href="http://<!--$host-->/admin/plugins/<!--$psubfolder-->/pilight.cgi?protocol=<!--$protocolpl-->&all=<!--$allpl-->&id=<!--$idpl-->&systemcode=<!--$systemcodepl-->&unit=<!--$unitpl-->&command=off" target="_blank">Test</a>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</form>
+
+</div>
+</div>

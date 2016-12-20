@@ -15,6 +15,7 @@ fi
 if [ -x /usr/bin/logger ]; then 
 	/usr/bin/logger "loxberry-plugin-$pluginname - Adding sudoers permissions"
 fi
+chmod 0640 /etc/sudoers.d/$pluginname
 echo %loxberry ALL = NOPASSWD: REPLACEINSTALLFOLDER/data/plugins/$pluginname/bin/send433 > /etc/sudoers.d/$pluginname
 echo %loxberry ALL = NOPASSWD: /etc/init.d/pilight >> /etc/sudoers.d/$pluginname
 chmod 0440 /etc/sudoers.d/$pluginname

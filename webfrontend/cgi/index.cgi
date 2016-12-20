@@ -51,7 +51,7 @@ our $transPIN;
 ##########################################################################
 
 # Version of this script
-$version = "0.0.4";
+$version = "0.0.5";
 
 # Figure out in which subfolder we are installed
 $psubfolder = abs_path($0);
@@ -291,6 +291,30 @@ if ( param('type')  eq "arctechv2" ) {
   our $unit3 = "0";
   our $all3 = "0";
   our $selectedarcv2all0 = "selected=selected";
+
+}
+
+# Calculate Pilight commands
+if ( param('type')  eq "pilight" ) {
+
+  our $unitpl = param('unitpl');
+  our $idpl = param('idpl');
+  our $systemcodepl = param('systemcodepl');
+
+  our $protocolpl = param('protocolpl');
+  ${"selected$protocolpl"} = "selected=selected";
+
+  our $allpl = param('allpl');
+  if ( $allpl eq "0" ) { our $selectedallpl0 = "selected=selected" }
+  else { our $selectedallpl1 = "selected=selected" }
+
+} else {
+
+  our $unitpl = "";
+  our $idpl = "";
+  our $systemcodepl = "";
+  our $allpl = "";
+  our $selectedallipl0 = "selected=selected";
 
 }
 
