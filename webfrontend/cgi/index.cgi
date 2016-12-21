@@ -51,7 +51,7 @@ our $transPIN;
 ##########################################################################
 
 # Version of this script
-$version = "0.0.4";
+$version = "0.0.5";
 
 # Figure out in which subfolder we are installed
 $psubfolder = abs_path($0);
@@ -91,6 +91,29 @@ if ( param('savesettings') ) {
 
   # Save Config
   $pcfg->save();
+
+  $output = qx(sudo /etc/init.d/pilight stop);
+  our $found = 0;
+  open(F,"+<$home/config/plugins/$psubfolder/pilight/config.json");
+    flock(F,2);
+    our @data = <F>;
+    seek(F,0,0);
+    truncate(F,0);
+    foreach (@data){
+      s/[\n\r]//g;
+      if ( $_ =~ /433gpio/ ) {
+        $found = 1;
+      }
+      if ( $_ =~ /sender/ && $found ) {
+        print F "		\"sender\": $transPIN,\n";
+        $found = 0;
+        next;
+      }
+      print F "$_\n";
+    }
+
+  close(F);
+  $output = qx(sudo /etc/init.d/pilight start);
 
 } 
 
@@ -268,6 +291,30 @@ if ( param('type')  eq "arctechv2" ) {
   our $unit3 = "0";
   our $all3 = "0";
   our $selectedarcv2all0 = "selected=selected";
+
+}
+
+# Calculate Pilight commands
+if ( param('type')  eq "pilight" ) {
+
+  our $unitpl = param('unitpl');
+  our $idpl = param('idpl');
+  our $systemcodepl = param('systemcodepl');
+
+  our $protocolpl = param('protocolpl');
+  ${"selected$protocolpl"} = "selected=selected";
+
+  our $allpl = param('allpl');
+  if ( $allpl eq "0" ) { our $selectedallpl0 = "selected=selected" }
+  else { our $selectedallpl1 = "selected=selected" }
+
+} else {
+
+  our $unitpl = "";
+  our $idpl = "";
+  our $systemcodepl = "";
+  our $allpl = "";
+  our $selectedallipl0 = "selected=selected";
 
 }
 
