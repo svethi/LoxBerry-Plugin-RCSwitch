@@ -36,11 +36,12 @@ fi
 if [ -x /usr/bin/logger ]; then 
 	/usr/bin/logger "loxberry-plugin-$pluginname - Configuring pilight"
 fi
+service pilight stop
 if [ -d /etc/pilight ]; then
-  service pilight stop
   mv /etc/pilight /etc/pilight.orig
-  ln -s REPLACEINSTALLFOLDER/config/plugins/$pluginname/pilight /etc/pilight
-  service pilight start
 fi
+rm /etc/pilight
+ln -s REPLACEINSTALLFOLDER/config/plugins/$pluginname/pilight /etc/pilight
+service pilight start
 
 exit 0
