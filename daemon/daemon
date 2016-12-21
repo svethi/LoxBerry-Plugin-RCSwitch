@@ -39,7 +39,7 @@ fi
 if [ -d /etc/pilight ]; then
   service pilight stop
   mv /etc/pilight /etc/pilight.orig
-  ln -s REPLACEINSTALLFOLDER/config/plugins/REPLACEPLUGINFOLDER/pilight /etc/pilight
+  ln -s REPLACEINSTALLFOLDER/config/plugins/$pluginname/pilight /etc/pilight
   service pilight start
 fi
 
