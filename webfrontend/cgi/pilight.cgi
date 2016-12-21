@@ -33,7 +33,7 @@ use CGI qw/:standard/;
 ##########################################################################
 
 # Version of this script
-our $version = "0.0.1";
+our $version = "0.0.2";
 
 # Figure out in which subfolder we are installed
 #our $psubfolder = abs_path($0);
@@ -145,9 +145,9 @@ if ( $query{'protocol'} ne "" ) {
   # Send command with rcswitch - do this 3 times to make sure the command could be received
   # Note: Family isn't needed for Elro, but is used here for backward compatibility for old version prior 0.9 (no protocol parameter and therefore
   # standard is "elro"
-  print "/usr/local/bin/pilight-send $protocol $id $systemcode $unit $all $command\n\n";
-  our $output = qx(/usr/local/bin/pilight-send $protocol $id $systemcode $unit $all $command 2>&1);
-  our $output1 = qx(/usr/local/bin/pilight-send $protocol $id $systemcode $unit $all $command 2>&1); # send twice
+  print "/usr/local/bin/pilight-send -P 5000 -S 127.0.0.1 $protocol $id $systemcode $unit $all $command\n\n";
+  our $output = qx(/usr/local/bin/pilight-send -P 5000 -S 127.0.0.1 $protocol $id $systemcode $unit $all $command 2>&1);
+  our $output1 = qx(/usr/local/bin/pilight-send -P 5000 -S 127.0.0.1 $protocol $id $systemcode $unit $all $command 2>&1); # send twice
 
 if ( !$output ) { $output = "OK." }
 
