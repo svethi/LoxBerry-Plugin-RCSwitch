@@ -12,7 +12,9 @@
 		"webserver-cache": 0,
 		"whitelist": "",
 		"stats-enable": 0,
-		"watchdog-enable": 0
+		"watchdog-enable": 0,
+		"standalone": 1,
+		"port": 5000
 	},
 	"hardware": {
 		"433gpio": {
