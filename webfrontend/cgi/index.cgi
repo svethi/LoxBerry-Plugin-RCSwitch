@@ -45,13 +45,14 @@ my  $home = File::HomeDir->my_home;
 our $psubfolder;
 our $pcfg;
 our $transPIN;
+our $pilightd;
 
 ##########################################################################
 # Read Settings
 ##########################################################################
 
 # Version of this script
-$version = "0.0.6";
+$version = "0.0.7";
 
 # Figure out in which subfolder we are installed
 $psubfolder = abs_path($0);
@@ -62,6 +63,7 @@ $installfolder   = $cfg->param("BASE.INSTALLFOLDER");
 $lang            = $cfg->param("BASE.LANG");
 $pcfg            = new Config::Simple("$home/config/plugins/$psubfolder/RCSwitch.cfg");
 $transPIN        = $pcfg->param("general.TransmissionPIN");
+$pilightd        = $pcfg->param("general.StartPilightd");
 
 # Init Language
 # Clean up lang variable
@@ -85,9 +87,9 @@ $template_title = "LoxBerry: RCSwitch Plugin";
 # Save settings
 if ( param('savesettings') ) {
 
-  our $transPIN = param('gpiopin');
+  $transPIN = param('gpiopin');
   quotemeta($transPIN);
-  our $pilightd = param('pilightd');
+  $pilightd = param('pilightd');
   quotemeta($pilightd);
   $pcfg->param("general.TransmissionPIN", "$transPIN");
   $pcfg->param("general.StartPilightd", "$pilightd");
