@@ -51,7 +51,7 @@ our $transPIN;
 ##########################################################################
 
 # Version of this script
-$version = "0.0.5";
+$version = "0.0.6";
 
 # Figure out in which subfolder we are installed
 $psubfolder = abs_path($0);
@@ -85,14 +85,19 @@ $template_title = "LoxBerry: RCSwitch Plugin";
 # Save settings
 if ( param('savesettings') ) {
 
-  $transPIN = param('gpiopin');
+  our $transPIN = param('gpiopin');
   quotemeta($transPIN);
+  our $pilightd = param('pilightd');
+  quotemeta($pilightd);
   $pcfg->param("general.TransmissionPIN", "$transPIN");
+  $pcfg->param("general.StartPilightd", "$pilightd");
 
   # Save Config
   $pcfg->save();
 
+  # Stop pilightd
   $output = qx(sudo /etc/init.d/pilight stop);
+
   our $found = 0;
   open(F,"+<$home/config/plugins/$psubfolder/pilight/config.json");
     flock(F,2);
@@ -113,9 +118,17 @@ if ( param('savesettings') ) {
     }
 
   close(F);
-  $output = qx(sudo /etc/init.d/pilight start);
+
+  # Start pilightd
+  if ( $pilightd ) {
+    $output = qx(sudo /etc/init.d/pilight start);
+  }
 
 } 
+
+# Select PLightd
+if ( $pilightd ) { our $selectedpilightd1 = "selected=selected" }
+else { our $selectedpilightd0 = "selected=selected" };
 
 # Select GPIO Pin
 if ( $transPIN eq "7" ) { our $selectedpin4 = "selected=selected" }
