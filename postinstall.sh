@@ -29,8 +29,11 @@ ARGV4=$4 # Forth argument is Plugin version
 ARGV5=$5 # Fifth argument is Base folder of LoxBerry
 
 /bin/sed -i "s:REPLACEINSTALLFOLDER:$ARGV5:g" $ARGV5/system/daemons/plugins/$ARGV2
+/bin/sed -i "s:REPLACEPLUGINFOLDER:$ARGV3:g" $ARGV5/system/daemons/plugins/$ARGV2
 /bin/sed -i "s:REPLACEINSTALLFOLDER:$ARGV5:g" $ARGV5/config/plugins/$ARGV3/pilight/config.json
 /bin/sed -i "s:REPLACEPLUGINFOLDER:$ARGV3:g" $ARGV5/config/plugins/$ARGV3/pilight/config.json
+/bin/sed -i "s:REPLACEINSTALLFOLDER:$ARGV5:g" $ARGV5/system/cron/cron.01min/$ARGV2
+/bin/sed -i "s:REPLACEPLUGINFOLDER:$ARGV3:g" $ARGV5/system/cron/cron.01min/$ARGV2
 chmod 0755 $ARGV5/data/plugins/$ARGV3/bin/send433
 
 echo "**********************************************************"

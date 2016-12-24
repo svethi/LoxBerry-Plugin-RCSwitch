@@ -45,13 +45,14 @@ my  $home = File::HomeDir->my_home;
 our $psubfolder;
 our $pcfg;
 our $transPIN;
+our $pilightd;
 
 ##########################################################################
 # Read Settings
 ##########################################################################
 
 # Version of this script
-$version = "0.0.5";
+$version = "0.0.7";
 
 # Figure out in which subfolder we are installed
 $psubfolder = abs_path($0);
@@ -62,6 +63,7 @@ $installfolder   = $cfg->param("BASE.INSTALLFOLDER");
 $lang            = $cfg->param("BASE.LANG");
 $pcfg            = new Config::Simple("$home/config/plugins/$psubfolder/RCSwitch.cfg");
 $transPIN        = $pcfg->param("general.TransmissionPIN");
+$pilightd        = $pcfg->param("general.StartPilightd");
 
 # Init Language
 # Clean up lang variable
@@ -87,12 +89,17 @@ if ( param('savesettings') ) {
 
   $transPIN = param('gpiopin');
   quotemeta($transPIN);
+  $pilightd = param('pilightd');
+  quotemeta($pilightd);
   $pcfg->param("general.TransmissionPIN", "$transPIN");
+  $pcfg->param("general.StartPilightd", "$pilightd");
 
   # Save Config
   $pcfg->save();
 
+  # Stop pilightd
   $output = qx(sudo /etc/init.d/pilight stop);
+
   our $found = 0;
   open(F,"+<$home/config/plugins/$psubfolder/pilight/config.json");
     flock(F,2);
@@ -113,9 +120,17 @@ if ( param('savesettings') ) {
     }
 
   close(F);
-  $output = qx(sudo /etc/init.d/pilight start);
+
+  # Start pilightd
+  if ( $pilightd ) {
+    $output = qx(sudo /etc/init.d/pilight start);
+  }
 
 } 
+
+# Select PLightd
+if ( $pilightd ) { our $selectedpilightd1 = "selected=selected" }
+else { our $selectedpilightd0 = "selected=selected" };
 
 # Select GPIO Pin
 if ( $transPIN eq "7" ) { our $selectedpin4 = "selected=selected" }

@@ -2,15 +2,53 @@
 
 # Check for pilight-daemon
 pluginname=$(basename $0 .sh)
-prozesstest=`/bin/ps aux`
 
+# Config file parsing (based on http://stackoverflow.com/a/20815951/3466839)
+shopt -s extglob
+configfile="REPLACEINSTALLFOLDER/config/plugins/$pluginname/RCSwitch.cfg" # set the actual path name of your (DOS or Unix) config file
+tr -d '\r' < $configfile > $configfile.unix
+while IFS='= ' read lhs rhs
+do
+    if [[ ! $lhs =~ ^\ *# && -n $lhs ]]; then
+        rhs="${rhs%%\#*}"    # Del in line right comments
+        rhs="${rhs%%*( )}"   # Del trailing spaces
+        rhs="${rhs%\"*}"     # Del opening string quotes
+        rhs="${rhs#\"*}"     # Del closing string quotes
+        if [[ $lhs =~ ^\[ ]]; then # Set INI-like sections, e.g. [MAIN]
+          lhs="${lhs%\]*}"     # Del opening bracket
+          lhs="${lhs#\[*}"     # Del closing bracket
+          sec=$lhs
+        else
+          if [[ ! $lhs =~ ^\; ]]; then # Don't parse comments startet with ;
+            name="$sec$lhs"
+            declare ${name}="$rhs"
+            #echo "$name = $rhs" # for debugging only
+          fi
+        fi
+    fi
+done < $configfile.unix
+# Config file parsing end
+
+prozesstest=`/bin/ps aux`
 test=`echo $prozesstest | grep pilight-daemon | wc -l`
 
-if [ $test == 0 ]
+if [ $generalStartPilightd == 1 ]
 then
-  if [ -x /usr/bin/logger ]; then
-        /usr/bin/logger "loxberry-plugin-$pluginname - Restarting pilight-daemon"
+
+  if [ $test == 0 ]
+  then
+    if [ -x /usr/bin/logger ]; then
+          /usr/bin/logger "loxberry-plugin-$pluginname - Restarting pilight-daemon"
+    fi
+    sudo /etc/init.d/pilight stop
+    sudo /etc/init.d/pilight start
   fi
-  sudo /etc/init.d/pilight stop
-  sudo /etc/init.d/pilight start
+
+else
+
+  if [ $test == 1 ]
+  then
+    sudo /etc/init.d/pilight stop
+  fi
+
 fi

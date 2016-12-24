@@ -52,6 +52,14 @@ Bitte lese Dir die Dokumentation unter <a href="http://www.loxwiki.eu:80/x/JATL"
 &nbsp;
 </p>
 
+<hr>
+
+<p>
+&nbsp;
+</p>
+
+<center><h3>Einstellungen</h3></center>
+
 <form method="post" data-ajax="false" name="main_form0" id="main_form0" action="./index.cgi">
 <input type="hidden" name="savesettings" id="savesettings" value="1">
 <p>
@@ -81,6 +89,23 @@ Bitte lese Dir die Dokumentation unter <a href="http://www.loxwiki.eu:80/x/JATL"
 </td>
 </tr>
 <tr>
+<td width="25%">
+<label>Pilight-Daemon starten:</label>
+</td>
+<td width="40%">
+<select name="pilightd" id="pilightd" data-mini="true" data-track-theme="e" data-role="slider">
+<option value="0" <!--$selectedpilightd0-->>Nein</option>
+<option value="1" <!--$selectedpilightd1-->>Ja</option>
+</select>
+</td>
+<td width="5%">
+&nbsp;
+</td>
+<td width="30%">
+<font size="-1">Wenn die Steckdosen per Pilight angesteuert werden sollen, muss der Daemon beim Systemstart gestartet werden. Wenn ausschließlich RCSwitch genutzt wird, ist der Daemon nicht notwendig und kann deaktiviert werden.</font>
+</td>
+</tr>
+<tr>
 <td colspan=4 align=center>
 <center>
 <button type="submit" form="main_form0" name="btnsubmit0" id="btnsubmit0" data-role="button" data-inline="true" data-mini="true" data-icon="check">Speichern</button>
@@ -102,7 +127,7 @@ Bitte lese Dir die Dokumentation unter <a href="http://www.loxwiki.eu:80/x/JATL"
 &nbsp;
 </p>
 
-<center><h3>Befehle für LoxoneConfig ermitteln</h3></center>
+<center><h3>Hilfsassistent: Befehle für LoxoneConfig ermitteln</h3></center>
 
 <p>
 Im folgenden kannst Du anhand der Einstellungen an Deiner Funksteckdose die korrekten Parameter für die Ein- und Ausschaltbefehle 
